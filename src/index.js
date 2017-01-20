@@ -1,8 +1,14 @@
 // Require the CSS for Webpack
 import css from './index.css'; // eslint-disable-line import/no-unresolved, no-unused-vars
-import Enemy from './enemy';
+import Enemy from './enemy'; // eslint-disable-line import/no-unresolved
+import Arena from './maps/arena'; // eslint-disable-line import/no-unresolved
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'root', {preload: preload, create: create, update: update, render: render});
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'root', {
+  preload: preload,
+  create: create,
+  update: update,
+  render: render
+});
 
 // Global variables
 // Player
@@ -21,42 +27,22 @@ var bullets;
 var fireRate = 100;
 var nextFire = 0;
 
+function preload() {
+  game.load.image('sky', 'assets/images/sky.png');
+  game.load.image('ground', 'assets/images/platform.png');
+  game.load.image('bullet', 'assets/images/bullet.png');
+  game.load.image('baddie', 'assets/images/invader.png');
+  game.load.spritesheet('dude', 'assets/images/dude.png', 32, 48);
+  game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
+  Arena.preload(game);
+}
+
 function create() {
   // Enable the Arcade Physics system
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
-  // A simple background for our game
-  game.add.sprite(0, 0, 'sky');
-
-  // The walls group contains the walls around the edge of the map
-  walls = game.add.group();
-
-  // We will enable physics for any object that is created in this group
-  walls.enableBody = true;
-
-  // Here we create the walls.
-  var wall = walls.create(0, game.world.height - 64, 'ground');
-  // Scale it to fit the width of the game (the original sprite is 400x32 in size)
-  wall.scale.setTo(2, 2);
-  // This stops it from moving away when you collide with it
-  wall.body.immovable = true;
-
-  // Repeat for each wall...
-  wall = walls.create(0, 0, 'ground');
-  wall.scale.setTo(2, 2);
-  wall.body.immovable = true;
-
-  // TODO: Fix sideways wall hitboxes not aligning with sprite when rotated
-  /*
-  wall = walls.create(64, 0, 'ground');
-  wall.scale.setTo(2, 2);
-  wall.body.immovable = true;
-  wall.angle = 90;
-  wall = walls.create(game.world.width - 64, 0, 'ground');
-  wall.scale.setTo(2, 2);
-  wall.body.immovable = true;
-  wall.angle = 90;
-  */
+  // Create the map
+  Arena.create(game);
 
   // The player and its settings
   player = game.add.sprite(32, game.world.height - 150, 'dude');
@@ -75,6 +61,9 @@ function create() {
   // Create cursors
   cursors = game.input.keyboard.createCursorKeys();
 
+  //  Create some baddies to waste :)
+  enemies = [];
+
   // Creates our enemy/monsters
   var baddie = game.add.sprite(0, 0, 'baddie');
 
@@ -91,9 +80,6 @@ function create() {
   enemyBullets.setAll('anchor.y', 0.5);
   enemyBullets.setAll('outOfBoundsKill', true);
   enemyBullets.setAll('checkWorldBounds', true);
-
-  //  Create some baddies to waste :)
-  enemies = [];
 
   // Number of enemies to spawn
   enemiesTotal = 10;
@@ -126,9 +112,15 @@ function create() {
   }
 
   baddie.bringToTop();
+
+  // Camera follows player
+  game.camera.follow(player);
 }
 
 function update() {
+  // Arena map
+  Arena.update(game, [player, ...enemies]);
+
   //  Collide the player with the walls
   var hitPlatform = game.physics.arcade.collide(player, walls);
   game.physics.arcade.overlap(enemyBullets, player, bulletHitPlayer, null, this);
