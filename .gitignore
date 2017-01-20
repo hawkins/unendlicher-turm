@@ -1,5 +1,8 @@
 node_modules
 build/assets/bundle.js
+yarn.lock
+*.log
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db

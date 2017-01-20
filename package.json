@@ -23,7 +23,7 @@
   "devDependencies": {
     "css-loader": "^0.26.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.14.0",
+    "webpack": "^2.2.0",
     "webpack-dev-server": "^1.16.2",
     "xo": "^0.17.1"
   }
