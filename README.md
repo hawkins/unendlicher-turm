@@ -13,6 +13,7 @@ If you're not familiar, this project uses Node.js. You can download it [here](ht
 4. Any changes you make will auto-refresh the appropriate components on the page. Be aware this may refresh the entire page if you changed the JavaScript core to the game. 
 
 
-# To Play 
-> Click the Mouse to fire at enemies
-> use U, D, R, L keys to move. 
+# How To Play 
+Click the Mouse to fire at enemies
+
+use U, D, R, L keys to move. 
