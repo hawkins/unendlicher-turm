@@ -1,5 +1,7 @@
 var layer;
 var layer2;
+var entranceLayer;
+var exitLayer;
 
 export default {
   preload: game => {
@@ -17,6 +19,8 @@ export default {
     // Create layers
     layer = map.createLayer('Floor');
     layer2 = map.createLayer('Walls');
+    entranceLayer = map.createLayer('EntranceLayer');
+    exitLayer = map.createLayer('ExitLayer');
 
     // Resize game world to match the floor
     layer.resizeWorld();
