@@ -15,7 +15,7 @@ export default {
   create: game => {
     // Create the map
     var map = game.add.tilemap('town');
-    map.addTilesetImage('Dungeon PNG', 'tiles');
+    map.addTilesetImage('DungeonCrawl_ProjectUtumnoTileset', 'tiles');
 
     // Create layers
     layer = map.createLayer('Floor');

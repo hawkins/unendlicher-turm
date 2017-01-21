@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" nextobjectid="1">
- <tileset firstgid="1" name="Dungeon PNG" tilewidth="32" tileheight="32" tilecount="3072" columns="64">
+ <tileset firstgid="1" name="DungeonCrawl_ProjectUtumnoTileset" tilewidth="32" tileheight="32" tilecount="3072" columns="64">
   <image source="../build/assets/images/tiles.png" width="2048" height="1536"/>
   <tile id="781">
    <animation>
