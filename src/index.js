@@ -52,9 +52,6 @@ function create() {
   // Create some baddies to waste
   enemies = [];
 
-  // Creates our enemy/monsters
-  var baddie = game.add.sprite(0, 0, 'baddie');
-
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
   player.body.maxVelocity.setTo(200, 200);
@@ -70,14 +67,14 @@ function create() {
   enemyBullets.setAll('checkWorldBounds', true);
 
   // Number of enemies to spawn
-  enemiesTotal = 10;
-  enemiesAlive = 10;
+  enemiesTotal = 20;
+  enemiesAlive = 20;
 
   // TODO: Refactor this into a game.add.group()
   // and use enemies.create() or similar
   // so we can use physics properly
   for (var i = 0; i < enemiesTotal; i++) {
-    enemies.push(new Enemy(i, game, baddie, enemyBullets));
+    enemies.push(new Enemy(i, game, player, enemyBullets));
   }
 
   // Explosion pool / Animation for when we rain down a fiery hellstorm upon the invaders
@@ -89,7 +86,7 @@ function create() {
     explosionAnimation.animations.add('kaboom');
   }
 
-  baddie.bringToTop();
+  player.bringToTop();
 
   // Camera follows player
   game.camera.follow(player);
@@ -111,8 +108,8 @@ function update() {
   for (var i = 0; i < enemies.length; i++) {
     if (enemies[i].alive) {
       enemiesAlive++;
-      game.physics.arcade.collide(player, enemies[i].baddie);
-      game.physics.arcade.overlap(playerController.bullets, enemies[i].baddie, bulletHitEnemy, null, this);
+      game.physics.arcade.collide(player, enemies[i].player);
+      game.physics.arcade.overlap(bullets, enemies[i].player, bulletHitEnemy, null, this);
       enemies[i].update();
     }
   }
