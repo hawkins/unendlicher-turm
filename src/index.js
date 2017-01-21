@@ -108,8 +108,8 @@ function update() {
   for (var i = 0; i < enemies.length; i++) {
     if (enemies[i].alive) {
       enemiesAlive++;
-      game.physics.arcade.collide(player, enemies[i].player);
-      game.physics.arcade.overlap(bullets, enemies[i].player, bulletHitEnemy, null, this);
+      game.physics.arcade.collide(player, enemies[i].baddie);
+      game.physics.arcade.overlap(playerController.bullets, enemies[i].baddie, bulletHitEnemy, null, this);
       enemies[i].update();
     }
   }

@@ -1,7 +1,7 @@
 export default class Player {
   constructor(game) {
     this.game = game;
-    this.fireRate = 100;
+    this.fireRate = 300;
     this.nextFire = 0;
   }
 
@@ -19,17 +19,13 @@ export default class Player {
     //  Player physics properties
     this.player.body.collideWorldBounds = true;
 
-    // Our two animations, walking left and right. TODO: add up, down
-    // this.player.animations.add('left', [0, 1, 2, 3], 10, true);
-    // this.player.animations.add('right', [5, 6, 7, 8], 10, true);
-
     // Now create bullets group
     this.bullets = this.game.add.group();
     this.bullets.enableBody = true;
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
     this.bullets.createMultiple(30, 'bullet', 0, false);
-    this.bullets.setAll('anchor.x', 0.5);
-    this.bullets.setAll('anchor.y', 0.5);
+    this.bullets.setAll('anchor.x', 0);
+    this.bullets.setAll('anchor.y', 0);
     this.bullets.setAll('outOfBoundsKill', true);
     this.bullets.setAll('checkWorldBounds', true);
 
@@ -76,7 +72,9 @@ export default class Player {
     if (this.game.time.now > this.nextFire) {
       // Then create the bullet
       var bullet = this.bullets.getFirstExists(false);
+
       bullet.reset(this.player.x, this.player.y);
+
       bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 500, this.game.input.activePointer);
 
       // Delay next bullet fire opportunity
