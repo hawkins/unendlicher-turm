@@ -21,11 +21,19 @@ var enemiesTotal = 0;
 var enemiesAlive = 0;
 var explosions;
 
+// Audio
+var music;
+var fire;
+var baddieDeath;
+
 // Controllers
 var fullscreenController;
 var playerController = new Player(game);
 
 function preload() {
+  game.load.audio('background', ['assets/audio/background.ogg']);
+  game.load.audio('fire', ['assets/audio/SoundEffects/fire.ogg']);
+  game.load.audio('baddieDeath', ['assets/audio/SoundEffects/baddieDeath.ogg']);
   game.load.image('sky', 'assets/images/sky.png');
   game.load.image('ground', 'assets/images/platform.png');
   game.load.image('bullet', 'assets/images/bullet.png');
@@ -51,6 +59,14 @@ function create() {
 
   // Create some baddies to waste
   enemies = [];
+
+  // Create audio
+  music = game.add.audio('background');
+  fire = game.add.audio('fire');
+  baddieDeath = game.add.audio('baddieDeath');
+
+  // Setting volume and loop
+  music.play('', 1, 0.3, true);
 
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -117,6 +133,7 @@ function update() {
   // If they're clicking or hitting spacebar, fire the weapon
   if (game.input.activePointer.isDown || spacebar.isDown) {
     playerController.fire(); //  Boom!
+    fire.play('', 0, 0.1, false);
   }
 
   // Handle player update
@@ -133,6 +150,7 @@ function bulletHitEnemy(baddie, bullet) {
     var explosionAnimation = explosions.getFirstExists(false);
     explosionAnimation.reset(baddie.x, baddie.y);
     explosionAnimation.play('kaboom', 30, false, true);
+    baddieDeath.play('', 0, 0.3, false);
   }
 }
 
