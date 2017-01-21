@@ -33,6 +33,7 @@ function preload() {
   game.load.image('baddie', 'assets/images/invader.png');
   game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
   playerController.preload();
+  arena.preload(game);
   town.preload(game);
 }
 
@@ -40,8 +41,8 @@ function create() {
   // Enable the Arcade Physics system
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
-  // Create the map
-  town.create(game);
+  // Create the map(s)
+  arena.create(game);
 
   // Create the player
   player = playerController.create();
@@ -98,7 +99,7 @@ function create() {
 
 function update() {
   // Arena map
-  town.update(game, [player, ...enemies]);
+  arena.update(game, [player, ...enemies]);
 
   //  Collide the player with the walls
   var hitPlatform = game.physics.arcade.collide(player, walls);
