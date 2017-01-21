@@ -1,7 +1,19 @@
 body {
     margin: 0;
+    width: 100%;
 }
 
-#root {
+body h1:first-of-type {
+    margin: auto;
+    padding: 50px;
+    text-align: center;
+}
+
+p {
+    margin: auto;
+    text-align: center;
+}
+
+#root canvas {
     margin: auto;
 }

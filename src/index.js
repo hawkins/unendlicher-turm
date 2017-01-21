@@ -1,9 +1,10 @@
 // Require the CSS for Webpack
 import css from './index.css'; // eslint-disable-line import/no-unresolved, no-unused-vars
 import Enemy from './enemy'; // eslint-disable-line import/no-unresolved
-import Arena from './maps/arena'; // eslint-disable-line import/no-unresolved
+import arena from './maps/arena'; // eslint-disable-line import/no-unresolved
+import Fullscreen from './fullscreen'; // eslint-disable-line import/no-unresolved
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'root', {
+var game = new Phaser.Game(896, 504, Phaser.AUTO, 'root', {
   preload: preload,
   create: create,
   update: update,
@@ -27,6 +28,8 @@ var bullets;
 var fireRate = 100;
 var nextFire = 0;
 
+var fullscreenController;
+
 function preload() {
   game.load.image('sky', 'assets/images/sky.png');
   game.load.image('ground', 'assets/images/platform.png');
@@ -34,7 +37,7 @@ function preload() {
   game.load.image('baddie', 'assets/images/invader.png');
   game.load.spritesheet('dude', 'assets/images/dude.png', 32, 48);
   game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
-  Arena.preload(game);
+  arena.preload(game);
 }
 
 function create() {
@@ -42,7 +45,7 @@ function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
   // Create the map
-  Arena.create(game);
+  arena.create(game);
 
   // The player and its settings
   player = game.add.sprite(32, game.world.height - 150, 'dude');
@@ -115,11 +118,14 @@ function create() {
 
   // Camera follows player
   game.camera.follow(player);
+
+  // Enable fullscreen
+  fullscreenController = new Fullscreen(game, 'F');
 }
 
 function update() {
   // Arena map
-  Arena.update(game, [player, ...enemies]);
+  arena.update(game, [player, ...enemies]);
 
   //  Collide the player with the walls
   var hitPlatform = game.physics.arcade.collide(player, walls);
