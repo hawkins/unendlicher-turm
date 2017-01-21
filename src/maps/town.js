@@ -35,6 +35,10 @@ export default {
     map.setCollisionBetween(1, 10000, true, layer3);
     map.setCollisionBetween(1, 10000, true, layer4);
     map.setCollisionBetween(1, 10000, true, layer5);
+
+    // Enter arena when player collides with entrance layer
+    map.setTileLocationCallback(8, 14, 1, 1, () => (game.state.start('arena')), this, layer6);
+    map.setTileLocationCallback(20, 14, 1, 1, () => (game.state.start('arena')), this, layer6);
   },
   update: (game, collidables) => {
     collidables.forEach(item => {
@@ -43,6 +47,7 @@ export default {
       game.physics.arcade.collide(item, layer3);
       game.physics.arcade.collide(item, layer4);
       game.physics.arcade.collide(item, layer5);
+      game.physics.arcade.collide(item, layer6);
     });
   }
 };
