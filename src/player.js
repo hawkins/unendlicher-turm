@@ -6,11 +6,11 @@ export default class Player {
   }
 
   preload() {
-    this.game.load.spritesheet('Wizard', 'assets/images/Wizard.png', 32, 48);
+    this.game.load.spritesheet('TJ', 'assets/images/TJ_topdown.png', 32, 48);
   }
 
   create() {
-    this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'Wizard');
+    this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'TJ');
     this.player.anchor.setTo(0.5, 0.5);
 
     //  We need to enable physics on the player
