@@ -52,7 +52,10 @@ export default class Player {
       this.player.body.velocity.x = 150;
       // update angle sprite is facing
       this.player.angle = 0;
-    } else if (cursors.up.isDown || keyW.isDown) { // Vertical motion
+    } 
+
+    // Vertical motion
+    if (cursors.up.isDown || keyW.isDown) { 
       // Move up
       this.player.body.velocity.y = -150;
       this.player.angle = 270;
@@ -61,6 +64,7 @@ export default class Player {
       this.player.body.velocity.y = 150;
       this.player.angle = 90;
     }
+
 
     // Stop motion
     if (!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
