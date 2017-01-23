@@ -1,12 +1,17 @@
 export default class Player {
   constructor(game) {
     this.game = game;
+    this.firestrike;
+    this.deathmoans;
     this.fireRate = 300;
     this.nextFire = 0;
   }
 
   preload() {
+    // Spirtes
     this.game.load.spritesheet('Wizard', 'assets/images/Wizard.png', 32, 48);
+    // Audio Files
+    this.game.load.audio('firestrike', ['assets/audio/SoundEffects/firestrike.ogg']);
   }
 
   create() {
@@ -18,6 +23,9 @@ export default class Player {
 
     //  Player physics properties
     this.player.body.collideWorldBounds = true;
+
+    // Now create audio for player
+    this.firestrike = this.game.add.audio('firestrike');
 
     // Now create bullets group
     this.bullets = this.game.add.group();
@@ -79,6 +87,9 @@ export default class Player {
 
       // Delay next bullet fire opportunity
       this.nextFire = this.game.time.now + this.fireRate;
+
+      // Play audio for Fire Strike
+      this.firestrike.play('', 0, 0.2, false);
     }
   }
 
