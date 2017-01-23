@@ -36,22 +36,27 @@ export default class Player {
     // Look at the mouse
     this.player.rotation = this.game.physics.arcade.angleToPointer(this.player);
 
+    var keyA = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+    var keyW = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+    var keyS = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+    var keyD = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+    
     // Horizontal motion
-    if (cursors.left.isDown) {
+    if (cursors.left.isDown || keyA.isDown) {
       //  Move to the left
       this.player.body.velocity.x = -150;
       // update angle sprite is facing
       this.player.angle = 180;
-    } else if (cursors.right.isDown) {
+    } else if (cursors.right.isDown || keyD.isDown) {
       //  Move to the right
       this.player.body.velocity.x = 150;
       // update angle sprite is facing
       this.player.angle = 0;
-    } else if (cursors.up.isDown) { // Vertical motion
+    } else if (cursors.up.isDown || keyW.isDown) { // Vertical motion
       // Move up
       this.player.body.velocity.y = -150;
       this.player.angle = 270;
-    } else if (cursors.down.isDown) {
+    } else if (cursors.down.isDown || keyS.isDown) {
       // Move down
       this.player.body.velocity.y = 150;
       this.player.angle = 90;
