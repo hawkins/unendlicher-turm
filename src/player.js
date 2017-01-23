@@ -42,26 +42,19 @@ export default class Player {
       this.player.body.velocity.x = -150;
       // update angle sprite is facing
       this.player.angle = 180;
-      this.fireAngle = Phaser.ANGLE_LEFT;
-
     } else if (cursors.right.isDown) {
       //  Move to the right
       this.player.body.velocity.x = 150;
       // update angle sprite is facing
       this.player.angle = 0;
-      this.fireAngle = Phaser.ANGLE_RIGHT;
-
     } else if (cursors.up.isDown) { // Vertical motion
       // Move up
       this.player.body.velocity.y = -150;
       this.player.angle = 270;
-      this.fireAngle = Phaser.ANGLE_UP;
-
     } else if (cursors.down.isDown) {
       // Move down
       this.player.body.velocity.y = 150;
       this.player.angle = 90;
-      this.fireAngle = Phaser.ANGLE_DOWN;
     }
 
     // Stop motion
