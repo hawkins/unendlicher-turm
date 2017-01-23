@@ -12,7 +12,13 @@ var fullscreenController;
 var playerController;
 var player;
 
+// Audio
+var music;
+
 function preload() {
+  // Load audio file
+  this.game.load.audio('townBackgroud',['assets/audio/SoundEffects/townBackgroud.ogg']);
+
   playerController = new Player(this.game);
   playerController.preload();
   town.preload(this.game);
@@ -30,6 +36,12 @@ function create() {
 
   // Create keys
   cursors = this.game.input.keyboard.createCursorKeys();
+
+  // Create Audio for town
+  music = this.game.add.audio('townBackgroud');
+
+  // Setting volume and loop
+  music.play('', 1, 0.3,true);
 
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -52,8 +64,13 @@ function update() {
   playerController.update(cursors);
 }
 
+function shutdown() {
+  this.game.sound.stopAll();
+}
+
 export default {
   preload,
   create,
-  update
+  update,
+  shutdown
 }
