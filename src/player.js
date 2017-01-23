@@ -40,22 +40,28 @@ export default class Player {
     if (cursors.left.isDown) {
       //  Move to the left
       this.player.body.velocity.x = -150;
-      this.player.animations.play('left');
+      // update angle sprite is facing
+      this.player.angle = 180;
+      this.fireAngle = Phaser.ANGLE_LEFT;
+
     } else if (cursors.right.isDown) {
       //  Move to the right
       this.player.body.velocity.x = 150;
-      this.player.animations.play('right');
-    }
+      // update angle sprite is facing
+      this.player.angle = 0;
+      this.fireAngle = Phaser.ANGLE_RIGHT;
 
-    // Vertical motion
-    if (cursors.up.isDown) {
+    } else if (cursors.up.isDown) { // Vertical motion
       // Move up
       this.player.body.velocity.y = -150;
-      this.player.animations.play('up');
+      this.player.angle = 270;
+      this.fireAngle = Phaser.ANGLE_UP;
+
     } else if (cursors.down.isDown) {
       // Move down
       this.player.body.velocity.y = 150;
-      this.player.animations.play('down');
+      this.player.angle = 90;
+      this.fireAngle = Phaser.ANGLE_DOWN;
     }
 
     // Stop motion
@@ -76,12 +82,12 @@ export default class Player {
       bullet.reset(this.player.x, this.player.y);
 
       bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 500, this.game.input.activePointer);
-
       // Delay next bullet fire opportunity
       this.nextFire = this.game.time.now + this.fireRate;
     }
   }
 
+  
   // When an enemy bullet hits us
   onBulletCollision(enemy, bullet) {
     bullet.kill();

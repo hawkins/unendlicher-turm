@@ -131,6 +131,8 @@ function bulletHitEnemy(baddie, bullet) {
 
 function render() {
   this.game.debug.text('Enemies: ' + enemiesAlive + ' / ' + enemiesTotal, 32, 32);
+  // Keeping score 10 points per kill?
+  this.game.debug.text('Score: ' + (enemiesTotal - enemiesAlive)*10 , 215, 32);
 }
 
 export default {

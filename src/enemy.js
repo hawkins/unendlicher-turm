@@ -1,4 +1,6 @@
+
 export default class Enemy {
+
   constructor(index, game, player, bullets) {
     this.game = game;
     this.health = 3;
