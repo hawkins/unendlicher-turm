@@ -21,11 +21,15 @@ var fullscreenController;
 var playerController;
 var player;
 
+// Audio
+var baddieDeath;
+
 function preload() {
   playerController = new Player(this.game);
   this.game.load.image('bullet', 'assets/images/bullet.png');
   this.game.load.image('baddie', 'assets/images/invader.png');
   this.game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
+  this.game.load.audio('baddieDeath', ['assets/audio/SoundEffects/baddieDeath.ogg']);
   playerController.preload();
   arena.preload(this.game);
 }
@@ -46,6 +50,9 @@ function create() {
 
   // Create some baddies to waste
   enemies = [];
+
+  // Create death sound for baddies
+  baddieDeath = this.game.add.audio('baddieDeath');
 
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -126,6 +133,7 @@ function bulletHitEnemy(baddie, bullet) {
     var explosionAnimation = explosions.getFirstExists(false);
     explosionAnimation.reset(baddie.x, baddie.y);
     explosionAnimation.play('kaboom', 30, false, true);
+    baddieDeath.play('', 0, 0.3, false);
   }
 }
 
