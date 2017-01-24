@@ -13,7 +13,7 @@ var playerController;
 var player;
 
 // Audio
-var music;
+var townMusic;
 
 function preload() {
   // Load audio file
@@ -38,10 +38,10 @@ function create() {
   cursors = this.game.input.keyboard.createCursorKeys();
 
   // Create Audio for town
-  music = this.game.add.audio('townBackgroud');
+  townMusic = this.game.add.audio('townBackgroud');
 
   // Setting volume and loop
-  music.play('', 1, 0.3,true);
+  townMusic.play('', 1, 0.3,true);
 
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);

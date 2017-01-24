@@ -22,6 +22,7 @@ var playerController;
 var player;
 
 // Audio
+var battleMusic
 var baddieDeath;
 
 function preload() {
@@ -29,6 +30,7 @@ function preload() {
   this.game.load.image('bullet', 'assets/images/bullet.png');
   this.game.load.image('baddie', 'assets/images/invader.png');
   this.game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
+  this.game.load.audio('madGod', ['assets/audio/SoundEffects/madGod.ogg']);
   this.game.load.audio('baddieDeath', ['assets/audio/SoundEffects/baddieDeath.ogg']);
   playerController.preload();
   arena.preload(this.game);
@@ -53,6 +55,12 @@ function create() {
 
   // Create death sound for baddies
   baddieDeath = this.game.add.audio('baddieDeath');
+
+  // Create Audio for town
+  battleMusic = this.game.add.audio('madGod');
+
+  // Setting volume and loop
+  battleMusic.play('', 1, 0.3,true);
 
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -137,6 +145,10 @@ function bulletHitEnemy(baddie, bullet) {
   }
 }
 
+function shutdown() {
+  this.game.sound.stopAll();
+}
+
 function render() {
   this.game.debug.text('Enemies: ' + enemiesAlive + ' / ' + enemiesTotal, 32, 32);
 }
@@ -145,5 +157,6 @@ export default {
   preload,
   create,
   update,
+  shutdown,
   render
 }
