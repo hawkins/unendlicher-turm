@@ -11,7 +11,7 @@ export default class Player {
     // Spirtes
     this.game.load.spritesheet('Wizard', 'assets/images/Wizard.png', 32, 48);
     // Audio Files
-    this.game.load.audio('firestrike', ['assets/audio/SoundEffects/firestrike.ogg']);
+    this.game.load.audio('firestrike', [ 'assets/audio/SoundEffects/firestrike.ogg' ]);
   }
 
   create() {
@@ -48,7 +48,7 @@ export default class Player {
     var keyW = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
     var keyS = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     var keyD = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-    
+
     // Horizontal motion
     if (cursors.left.isDown || keyA.isDown) {
       //  Move to the left
@@ -60,10 +60,10 @@ export default class Player {
       this.player.body.velocity.x = 150;
       // update angle sprite is facing
       this.player.angle = 0;
-    } 
+    }
 
     // Vertical motion
-    if (cursors.up.isDown || keyW.isDown) { 
+    if (cursors.up.isDown || keyW.isDown) {
       // Move up
       this.player.body.velocity.y = -150;
       this.player.angle = 270;
@@ -72,7 +72,6 @@ export default class Player {
       this.player.body.velocity.y = 150;
       this.player.angle = 90;
     }
-
 
     // Stop motion
     if (!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
@@ -100,7 +99,6 @@ export default class Player {
     }
   }
 
-  
   // When an enemy bullet hits us
   onBulletCollision(enemy, bullet) {
     bullet.kill();

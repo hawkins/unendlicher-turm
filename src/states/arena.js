@@ -1,11 +1,15 @@
 // Require the CSS for Webpack
-import css from '../index.css'; // eslint-disable-line import/no-unresolved, no-unused-vars
-import Enemy from '../enemy'; // eslint-disable-line import/no-unresolved
-import Player from '../player'; // eslint-disable-line import/no-unresolved
-import arena from '../maps/arena'; // eslint-disable-line import/no-unresolved
-import Fullscreen from '../fullscreen'; // eslint-disable-line import/no-unresolved
+import css from '../index.css';
+// eslint-disable-line import/no-unresolved, no-unused-vars
+import Enemy from '../enemy';
+// eslint-disable-line import/no-unresolved
+import Player from '../player';
+// eslint-disable-line import/no-unresolved
+import arena from '../maps/arena';
+// eslint-disable-line import/no-unresolved
+import Fullscreen from '../fullscreen';
 
-
+// eslint-disable-line import/no-unresolved
 var cursors;
 var spacebar;
 
@@ -21,17 +25,11 @@ var fullscreenController;
 var playerController;
 var player;
 
-// Audio
-var battleMusic
-var baddieDeath;
-
 function preload() {
   playerController = new Player(this.game);
   this.game.load.image('bullet', 'assets/images/bullet.png');
   this.game.load.image('baddie', 'assets/images/invader.png');
   this.game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
-  this.game.load.audio('madGod', ['assets/audio/SoundEffects/madGod.ogg']);
-  this.game.load.audio('baddieDeath', ['assets/audio/SoundEffects/baddieDeath.ogg']);
   playerController.preload();
   arena.preload(this.game);
 }
@@ -52,15 +50,6 @@ function create() {
 
   // Create some baddies to waste
   enemies = [];
-
-  // Create death sound for baddies
-  baddieDeath = this.game.add.audio('baddieDeath');
-
-  // Create Audio for town
-  battleMusic = this.game.add.audio('madGod');
-
-  // Setting volume and loop
-  battleMusic.play('', 1, 0.3,true);
 
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -91,7 +80,7 @@ function create() {
   explosions = this.game.add.group();
 
   for (var i = 0; i < 10; i++) {
-    var explosionAnimation = explosions.create(0, 0, 'kaboom', [0], false);
+    var explosionAnimation = explosions.create(0, 0, 'kaboom', [ 0 ], false);
     explosionAnimation.anchor.setTo(0.5, 0.5);
     explosionAnimation.animations.add('kaboom');
   }
@@ -107,7 +96,7 @@ function create() {
 
 function update() {
   // Arena map
-  arena.update(this.game, [player, ...enemies]);
+  arena.update(this.game, [ player, ...enemies ]);
 
   this.game.physics.arcade.overlap(enemyBullets, player, playerController.onBulletCollision, null, this);
 
@@ -141,22 +130,11 @@ function bulletHitEnemy(baddie, bullet) {
     var explosionAnimation = explosions.getFirstExists(false);
     explosionAnimation.reset(baddie.x, baddie.y);
     explosionAnimation.play('kaboom', 30, false, true);
-    baddieDeath.play('', 0, 0.3, false);
   }
-}
-
-function shutdown() {
-  this.game.sound.stopAll();
 }
 
 function render() {
   this.game.debug.text('Enemies: ' + enemiesAlive + ' / ' + enemiesTotal, 32, 32);
 }
 
-export default {
-  preload,
-  create,
-  update,
-  shutdown,
-  render
-}
+export default { preload, create, update, render };
