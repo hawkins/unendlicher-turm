@@ -24,7 +24,7 @@ export default class Enemy {
     this.game.physics.arcade.velocityFromRotation(this.baddie.rotation, 90, this.baddie.body.velocity);
   }
 
-  // This function damages the enemy and returns true if the enemy was killed
+  // Damages the enemy and returns true if the enemy was killed
   damage() {
     this.health -= 1;
 
@@ -37,7 +37,7 @@ export default class Enemy {
     return false;
   }
 
-  // This function controls what the enemy does on every update
+  // Controls what the enemy does on every update
   update() {
     if (this.game.physics.arcade.distanceBetween(this.baddie, this.player) < 300) {
       if (this.game.time.now > this.nextFire) {
@@ -48,5 +48,10 @@ export default class Enemy {
         bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
       }
     }
+  }
+
+  // Return the sprite object associated with this enemy
+  getSprite() {
+    return this.baddie;
   }
 }

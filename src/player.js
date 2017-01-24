@@ -10,7 +10,7 @@ export default class Player {
   }
 
   create() {
-    this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'Wizard');
+    this.player = this.game.add.sprite(96, (this.game.world.height / 2) - 16, 'Wizard');
     this.player.anchor.setTo(0.5, 0.5);
 
     //  We need to enable physics on the player

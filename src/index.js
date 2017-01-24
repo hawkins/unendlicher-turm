@@ -1,16 +1,12 @@
 import arenaState from './states/arena';
 import townState from './states/town';
 
-import Player from './player';
-
+// Define the game
 var game = new Phaser.Game(896, 504, Phaser.AUTO, 'root');
 
-// Global variables
-// Player
-
-// game.globalState.player;
-
+// Add states to the game
 game.state.add('arena', arenaState);
 game.state.add('town', townState);
 
+// Start the start state
 game.state.start('town');
