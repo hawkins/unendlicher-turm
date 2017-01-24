@@ -16,6 +16,13 @@
     ],
     "settings": {
       "import/resolver": "webpack"
+    },
+    "rules": {
+      "import/no-unresolved": "off",
+      "no-warning-comments": "off",
+      "block-scoped-var": "off",
+      "no-redeclare": "off",
+      "no-unused-vars": "off"
     }
   },
   "author": "Team Cecil",

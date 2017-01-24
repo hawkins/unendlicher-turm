@@ -1,4 +1,4 @@
-import Enemy from './enemy'; // eslint-disable-line import/no-unresolved
+import Enemy from './enemy';
 
 export default class EnemyFactory {
   constructor(game, wave) {
