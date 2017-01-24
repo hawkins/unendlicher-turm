@@ -68,7 +68,7 @@ function create() {
 
 function update() {
   // Arena map
-  arena.update(this.game, [player, ...enemyController.enemies]);
+  arena.update(this.game, [player, ...enemyController.enemyGroup.children]);
 
   this.game.physics.arcade.overlap(enemyController.enemyBullets, player, playerController.onBulletCollision, null, this);
 
@@ -88,7 +88,7 @@ function update() {
 // Explosion Animation / Destroy enemies
 function bulletHitEnemy(baddie, bullet) {
   bullet.kill();
-  var destroyed = enemyController.enemies[baddie.name].damage();
+  var destroyed = enemyController.enemies[baddie.name].hurt();
 
   if (destroyed) {
     var explosionAnimation = enemyController.explosions.getFirstExists(false);

@@ -1,17 +1,18 @@
 export default class Enemy {
-  constructor(index, game, player, bullets) {
+  constructor(index, game, player, bullets, health, damage) {
     this.game = game;
-    this.health = 3;
     this.player = player;
     this.bullets = bullets;
+    this.health = health;
+    this.damage = damage;
+
     this.fireRate = 1000;
     this.nextFire = 0;
     this.alive = true;
-
     var startX = this.game.world.randomX;
     var startY = this.game.world.randomY;
-    this.baddie = this.game.add.sprite(startX, startY, 'baddie');
 
+    this.baddie = this.game.add.sprite(startX, startY, 'baddie');
     this.baddie.anchor.set(0.5);
     this.baddie.name = index.toString();
     this.game.physics.enable(this.baddie, Phaser.Physics.ARCADE);
@@ -24,8 +25,8 @@ export default class Enemy {
     this.game.physics.arcade.velocityFromRotation(this.baddie.rotation, 90, this.baddie.body.velocity);
   }
 
-  // Damages the enemy and returns true if the enemy was killed
-  damage() {
+  // Hurts the enemy and returns true if the enemy was killed
+  hurt() {
     this.health -= 1;
 
     // Kill the enemy if health depleted

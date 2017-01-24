@@ -61,11 +61,10 @@ export default class EnemyFactory {
       explosionAnimation.animations.add('kaboom');
     }
 
-    // TODO: Create enemies
+    // Create enemies
     this.spawn = this.getSpawn(this.wave);
     for (var i = 0; i < this.spawn.number; i++) {
-      // TODO: Consider this.spawn.damage, this.spawn.health
-      var enemy = new Enemy(i, this.game, this.player, this.enemyBullets);
+      var enemy = new Enemy(i, this.game, this.player, this.enemyBullets, this.spawn.health, this.spawn.damage);
       this.enemies.push(enemy);
       this.enemyGroup.add(enemy.getSprite());
     }
