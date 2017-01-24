@@ -36,27 +36,35 @@ export default class Player {
     // Look at the mouse
     this.player.rotation = this.game.physics.arcade.angleToPointer(this.player);
 
+    var keyA = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+    var keyW = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+    var keyS = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+    var keyD = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+    
     // Horizontal motion
-    if (cursors.left.isDown) {
+    if (cursors.left.isDown || keyA.isDown) {
       //  Move to the left
       this.player.body.velocity.x = -150;
-      this.player.animations.play('left');
-    } else if (cursors.right.isDown) {
+      // update angle sprite is facing
+      this.player.angle = 180;
+    } else if (cursors.right.isDown || keyD.isDown) {
       //  Move to the right
       this.player.body.velocity.x = 150;
-      this.player.animations.play('right');
-    }
+      // update angle sprite is facing
+      this.player.angle = 0;
+    } 
 
     // Vertical motion
-    if (cursors.up.isDown) {
+    if (cursors.up.isDown || keyW.isDown) { 
       // Move up
       this.player.body.velocity.y = -150;
-      this.player.animations.play('up');
-    } else if (cursors.down.isDown) {
+      this.player.angle = 270;
+    } else if (cursors.down.isDown || keyS.isDown) {
       // Move down
       this.player.body.velocity.y = 150;
-      this.player.animations.play('down');
+      this.player.angle = 90;
     }
+
 
     // Stop motion
     if (!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
@@ -76,12 +84,12 @@ export default class Player {
       bullet.reset(this.player.x, this.player.y);
 
       bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 500, this.game.input.activePointer);
-
       // Delay next bullet fire opportunity
       this.nextFire = this.game.time.now + this.fireRate;
     }
   }
 
+  
   // When an enemy bullet hits us
   onBulletCollision(enemy, bullet) {
     bullet.kill();
