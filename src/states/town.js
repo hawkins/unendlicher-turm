@@ -17,7 +17,7 @@ var townMusic;
 
 function preload() {
   // Load audio file
-  this.game.load.audio('townBackgroud',['assets/audio/SoundEffects/townBackgroud.ogg']);
+  this.game.load.audio('adventure',['assets/audio/SoundEffects/adventure.ogg']);
 
   playerController = new Player(this.game);
   playerController.preload();
@@ -38,7 +38,7 @@ function create() {
   cursors = this.game.input.keyboard.createCursorKeys();
 
   // Create Audio for town
-  townMusic = this.game.add.audio('townBackgroud');
+  townMusic = this.game.add.audio('adventure');
 
   // Setting volume and loop
   townMusic.play('', 1, 0.3,true);
