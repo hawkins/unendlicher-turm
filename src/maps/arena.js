@@ -35,15 +35,23 @@ export default {
     map.setCollisionBetween(1, 10000, true, layer2);
 
     // Enter town when player collides with exit layer
-    map.setTileLocationCallback(1, 14, 1, 2, () => (game.state.start('town')), this, exitLayer);
+    map.setTileLocationCallback(1, 14, 1, 2, () => game.state.start('town'), this, exitLayer);
 
     // Enter next arena when player collides with entrance layer and is unlocked
-    map.setTileLocationCallback(28, 14, 1, 2, () => {
-      if (this.unlocked) {
-        store.wave++;
-        game.state.start('arena');
-      }
-    }, this, entranceLayer);
+    map.setTileLocationCallback(
+      28,
+      14,
+      1,
+      2,
+      () => {
+        if (this.unlocked) {
+          store.wave++;
+          game.state.start('arena');
+        }
+      },
+      this,
+      entranceLayer
+    );
   },
   update: (game, collidables) => {
     collidables.forEach(item => {
