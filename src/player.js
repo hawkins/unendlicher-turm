@@ -3,12 +3,17 @@ import store from './store';
 export default class Player {
   constructor(game) {
     this.game = game;
+    this.firestrike;
+    this.deathmoans;
     this.fireRate = 300;
     this.nextFire = 0;
   }
 
   preload() {
+    // Spirtes
     this.game.load.spritesheet('Wizard', 'assets/images/Wizard.png', 32, 48);
+    // Audio Files
+    this.game.load.audio('firestrike', [ 'assets/audio/SoundEffects/firestrike.ogg' ]);
   }
 
   create() {
@@ -20,6 +25,9 @@ export default class Player {
 
     //  Player physics properties
     this.player.body.collideWorldBounds = true;
+
+    // Now create audio for player
+    this.firestrike = this.game.add.audio('firestrike');
 
     // Now create bullets group
     this.bullets = this.game.add.group();
@@ -38,26 +46,31 @@ export default class Player {
     // Look at the mouse
     this.player.rotation = this.game.physics.arcade.angleToPointer(this.player);
 
+    var keyA = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+    var keyW = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+    var keyS = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+    var keyD = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+
     // Horizontal motion
-    if (cursors.left.isDown) {
+    if (cursors.left.isDown || keyA.isDown) {
       //  Move to the left
       this.player.body.velocity.x = -store.speed;
-      this.player.animations.play('left');
-    } else if (cursors.right.isDown) {
+      this.player.angle = 180;
+    } else if (cursors.right.isDown || keyD.isDown) {
       //  Move to the right
       this.player.body.velocity.x = store.speed;
-      this.player.animations.play('right');
+      this.player.angle = 0;
     }
 
     // Vertical motion
-    if (cursors.up.isDown) {
+    if (cursors.up.isDown || keyW.isDown) {
       // Move up
       this.player.body.velocity.y = -store.speed;
-      this.player.animations.play('up');
-    } else if (cursors.down.isDown) {
+      this.player.angle = 270;
+    } else if (cursors.down.isDown || keyS.isDown) {
       // Move down
       this.player.body.velocity.y = store.speed;
-      this.player.animations.play('down');
+      this.player.angle = 90;
     }
 
     // Stop motion
@@ -78,9 +91,11 @@ export default class Player {
       bullet.reset(this.player.x, this.player.y);
 
       bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 500, this.game.input.activePointer);
-
       // Delay next bullet fire opportunity
       this.nextFire = this.game.time.now + this.fireRate;
+
+      // Play audio for Fire Strike
+      this.firestrike.play('', 0, 0.2, false);
     }
   }
 

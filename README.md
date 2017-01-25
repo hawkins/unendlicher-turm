@@ -13,10 +13,9 @@ If you're not familiar, this project uses Node.js. You can download it [here](ht
   > `localhost` will not work - it is important to use `127.0.0.1`
 
 4. Any changes you make will auto-refresh the appropriate components on the page. Be aware this may refresh the entire page if you changed the JavaScript core to the game
-5. Before you commit, be sure to run `npm run lint` to lint your code
 
 
 # How To Play
 
-- Click the Mouse to fire at enemies
-- use your arrow keys to move
+- Click the Mouse or hit spacebar to fire at enemies
+- Use the arrow keys / WASD cluster to move

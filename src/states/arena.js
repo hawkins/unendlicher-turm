@@ -106,9 +106,4 @@ function render() {
   enemyController.render();
 }
 
-export default {
-  preload,
-  create,
-  update,
-  render
-};
+export default { preload, create, update, render };
