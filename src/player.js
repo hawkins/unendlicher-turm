@@ -1,3 +1,5 @@
+import store from './store';
+
 export default class Player {
   constructor(game) {
     this.game = game;
@@ -15,7 +17,7 @@ export default class Player {
   }
 
   create() {
-    this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'Wizard');
+    this.player = this.game.add.sprite(96, (this.game.world.height / 2) - 16, 'Wizard');
     this.player.anchor.setTo(0.5, 0.5);
 
     //  We need to enable physics on the player
@@ -52,24 +54,22 @@ export default class Player {
     // Horizontal motion
     if (cursors.left.isDown || keyA.isDown) {
       //  Move to the left
-      this.player.body.velocity.x = -150;
-      // update angle sprite is facing
+      this.player.body.velocity.x = -store.speed;
       this.player.angle = 180;
     } else if (cursors.right.isDown || keyD.isDown) {
       //  Move to the right
-      this.player.body.velocity.x = 150;
-      // update angle sprite is facing
+      this.player.body.velocity.x = store.speed;
       this.player.angle = 0;
     }
 
     // Vertical motion
     if (cursors.up.isDown || keyW.isDown) {
       // Move up
-      this.player.body.velocity.y = -150;
+      this.player.body.velocity.y = -store.speed;
       this.player.angle = 270;
     } else if (cursors.down.isDown || keyS.isDown) {
       // Move down
-      this.player.body.velocity.y = 150;
+      this.player.body.velocity.y = store.speed;
       this.player.angle = 90;
     }
 

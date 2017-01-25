@@ -1,9 +1,12 @@
+import store from '../store';
+
 var layer;
 var layer2;
 var entranceLayer;
 var exitLayer;
 
 export default {
+  unlocked: false,
   preload: game => {
     // Load tilemap
     game.load.tilemap('arena', 'assets/maps/arena.json', null, Phaser.Tilemap.TILED_JSON);
@@ -12,6 +15,9 @@ export default {
     game.load.image('tiles', 'assets/images/tiles.png');
   },
   create: game => {
+    // In case this is not our first map, reset the map
+    this.unlocked = false;
+
     // Create the map
     var map = game.add.tilemap('arena');
     map.addTilesetImage('DungeonCrawl_ProjectUtumnoTileset', 'tiles');
@@ -29,13 +35,26 @@ export default {
     map.setCollisionBetween(1, 10000, true, layer2);
 
     // Enter town when player collides with exit layer
-    map.setTileLocationCallback(1, 14, 1, 2, () => game.state.start('town'), this, exitLayer);
+    map.setTileLocationCallback(1, 14, 1, 2, () => (game.state.start('town')), this, exitLayer);
+
+    // Enter next arena when player collides with entrance layer and is unlocked
+    map.setTileLocationCallback(28, 14, 1, 2, () => {
+      if (this.unlocked) {
+        store.wave++;
+        game.state.start('arena');
+      }
+    }, this, entranceLayer);
   },
   update: (game, collidables) => {
     collidables.forEach(item => {
       // Collide with item
       game.physics.arcade.collide(item, layer2);
       game.physics.arcade.collide(item, exitLayer);
+      game.physics.arcade.collide(item, entranceLayer);
     });
+  },
+  // This function allows
+  unlock: () => {
+    this.unlocked = true;
   }
 };

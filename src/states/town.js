@@ -1,10 +1,7 @@
 // Require the CSS for Webpack
 import css from '../index.css';
-// eslint-disable-line import/no-unresolved, no-unused-vars
 import Player from '../player';
-// eslint-disable-line import/no-unresolved
 import town from '../maps/town';
-// eslint-disable-line import/no-unresolved
 import Fullscreen from '../fullscreen';
 
 // eslint-disable-line import/no-unresolved
