@@ -1,9 +1,10 @@
 // Require the CSS for Webpack
-import css from '../index.css'; // eslint-disable-line import/no-unresolved, no-unused-vars
-import Player from '../player'; // eslint-disable-line import/no-unresolved
-import town from '../maps/town'; // eslint-disable-line import/no-unresolved
-import Fullscreen from '../fullscreen'; // eslint-disable-line import/no-unresolved
+import css from '../index.css';
+import Player from '../player';
+import town from '../maps/town';
+import Fullscreen from '../fullscreen';
 
+// eslint-disable-line import/no-unresolved
 // Controls
 var cursors;
 
@@ -17,7 +18,7 @@ var townMusic;
 
 function preload() {
   // Load audio file
-  this.game.load.audio('adventure',['assets/audio/SoundEffects/adventure.ogg']);
+  this.game.load.audio('adventure', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
 
   playerController = new Player(this.game);
   playerController.preload();
@@ -41,7 +42,7 @@ function create() {
   townMusic = this.game.add.audio('adventure');
 
   // Setting volume and loop
-  townMusic.play('', 1, 0.3,true);
+  townMusic.play('', 1, 0.3, true);
 
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -58,7 +59,7 @@ function create() {
 
 function update() {
   // Arena map
-  town.update(this.game, [player]);
+  town.update(this.game, [ player ]);
 
   // Handle player update
   playerController.update(cursors);
@@ -68,9 +69,4 @@ function shutdown() {
   this.game.sound.stopAll();
 }
 
-export default {
-  preload,
-  create,
-  update,
-  shutdown
-}
+export default { preload, create, update, shutdown };

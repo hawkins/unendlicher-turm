@@ -1,3 +1,5 @@
+import store from './store';
+
 export default class Player {
   constructor(game) {
     this.game = game;
@@ -8,14 +10,13 @@ export default class Player {
   }
 
   preload() {
-    // Spirtes
-    this.game.load.spritesheet('Wizard', 'assets/images/Wizard.png', 32, 48);
+    this.game.load.spritesheet('TJ', 'assets/images/TJ_topdown.png', 32, 48);
     // Audio Files
-    this.game.load.audio('firestrike', ['assets/audio/SoundEffects/firestrike.ogg']);
+    this.game.load.audio('firestrike', [ 'assets/audio/SoundEffects/firestrike.ogg' ]);
   }
 
   create() {
-    this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'Wizard');
+    this.player = this.game.add.sprite(96, (this.game.world.height / 2) - 16, 'TJ');
     this.player.anchor.setTo(0.5, 0.5);
 
     //  We need to enable physics on the player
@@ -48,31 +49,28 @@ export default class Player {
     var keyW = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
     var keyS = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     var keyD = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-    
+
     // Horizontal motion
     if (cursors.left.isDown || keyA.isDown) {
       //  Move to the left
-      this.player.body.velocity.x = -150;
-      // update angle sprite is facing
+      this.player.body.velocity.x = -store.speed;
       this.player.angle = 180;
     } else if (cursors.right.isDown || keyD.isDown) {
       //  Move to the right
-      this.player.body.velocity.x = 150;
-      // update angle sprite is facing
+      this.player.body.velocity.x = store.speed;
       this.player.angle = 0;
-    } 
+    }
 
     // Vertical motion
-    if (cursors.up.isDown || keyW.isDown) { 
+    if (cursors.up.isDown || keyW.isDown) {
       // Move up
-      this.player.body.velocity.y = -150;
+      this.player.body.velocity.y = -store.speed;
       this.player.angle = 270;
     } else if (cursors.down.isDown || keyS.isDown) {
       // Move down
-      this.player.body.velocity.y = 150;
+      this.player.body.velocity.y = store.speed;
       this.player.angle = 90;
     }
-
 
     // Stop motion
     if (!cursors.left.isDown && !cursors.right.isDown && !cursors.up.isDown && !cursors.down.isDown) {
@@ -100,7 +98,6 @@ export default class Player {
     }
   }
 
-  
   // When an enemy bullet hits us
   onBulletCollision(enemy, bullet) {
     bullet.kill();
