@@ -1,4 +1,5 @@
-const path = require('path'); // eslint-disable-line import/no-unresolved
+const path = require('path');
+const prettierPlugin = require('prettier-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -9,6 +10,9 @@ module.exports = {
     publicPath: '/assets/',
     filename: 'bundle.js'
   },
+  plugins: [
+    new prettierPlugin({ singleQuote: true, printWidth: 160 })
+  ],
   module: {
     loaders: [
       {test: /\.css$/, loader: 'style-loader!css-loader'}
