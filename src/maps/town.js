@@ -37,8 +37,8 @@ export default {
     map.setCollisionBetween(1, 10000, true, layer5);
 
     // Enter arena when player collides with entrance layer
-    map.setTileLocationCallback(8, 14, 1, 1, () => (game.state.start('arena')), this, layer6);
-    map.setTileLocationCallback(20, 14, 1, 1, () => (game.state.start('arena')), this, layer6);
+    map.setTileLocationCallback(8, 14, 1, 1, () => game.state.start('arena'), this, layer6);
+    map.setTileLocationCallback(20, 14, 1, 1, () => game.state.start('arena'), this, layer6);
   },
   update: (game, collidables) => {
     collidables.forEach(item => {

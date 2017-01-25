@@ -7,7 +7,7 @@ export default class Fullscreen {
 
     // Add key listener
     var fullscreenKey = this.game.input.keyboard.addKey(Phaser.Keyboard[key]);
-    fullscreenKey.onDown.add(() => (this.toggle()));
+    fullscreenKey.onDown.add(() => this.toggle());
   }
 
   // This function toggles the fullscreen status
