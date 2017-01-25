@@ -11,7 +11,7 @@ export default class EnemyFactory {
     this.enemies = [];
     this.enemyGroup = undefined;
     this.enemyBullets = undefined;
-    this.explosions = this.game.add.group();
+    this.explosions;
   }
 
   // Sets the enemies target, i.e., the player
@@ -54,6 +54,7 @@ export default class EnemyFactory {
     // TODO: Enemy physics
     this.enemyGroup = this.game.add.group();
 
+    this.explosions = this.game.add.group();
     // Prepare explosion pool
     for (var i = 0; i < this.maxExplosions; i++) {
       var explosionAnimation = this.explosions.create(0, 0, 'kaboom', [0], false);
