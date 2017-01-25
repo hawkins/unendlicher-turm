@@ -1,3 +1,5 @@
+import store from './store';
+
 export default class Player {
   constructor(game) {
     this.game = game;
@@ -39,22 +41,22 @@ export default class Player {
     // Horizontal motion
     if (cursors.left.isDown) {
       //  Move to the left
-      this.player.body.velocity.x = -150;
+      this.player.body.velocity.x = -store.speed;
       this.player.animations.play('left');
     } else if (cursors.right.isDown) {
       //  Move to the right
-      this.player.body.velocity.x = 150;
+      this.player.body.velocity.x = store.speed;
       this.player.animations.play('right');
     }
 
     // Vertical motion
     if (cursors.up.isDown) {
       // Move up
-      this.player.body.velocity.y = -150;
+      this.player.body.velocity.y = -store.speed;
       this.player.animations.play('up');
     } else if (cursors.down.isDown) {
       // Move down
-      this.player.body.velocity.y = 150;
+      this.player.body.velocity.y = store.speed;
       this.player.animations.play('down');
     }
 

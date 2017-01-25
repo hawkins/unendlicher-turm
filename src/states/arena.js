@@ -4,6 +4,7 @@ import Player from '../player';
 import arena from '../maps/arena';
 import Fullscreen from '../fullscreen';
 import EnemyFactory from '../enemy-factory';
+import store from '../store';
 
 // Keys
 var cursors;
@@ -18,7 +19,7 @@ var player;
 function preload() {
   // Create controllers now that game exists
   playerController = new Player(this.game);
-  enemyController = new EnemyFactory(this.game, 1);
+  enemyController = new EnemyFactory(this.game, store.wave);
 
   // Now call actual preload methods
   enemyController.preload();
@@ -82,9 +83,13 @@ function update() {
 
   // Handle player update
   playerController.update(cursors);
+
+  // If the wave is complete, unlock the next arena
+  if (enemyController.waveComplete) {
+    arena.unlock();
+  }
 }
 
-// TODO: Refactor enemies so we can have onBUlletCollision function for each instance individually
 // Explosion Animation / Destroy enemies
 function bulletHitEnemy(baddie, bullet) {
   bullet.kill();
