@@ -16,6 +16,10 @@ var playerController;
 var enemyController;
 var player;
 
+// Audio
+var battleMusic;
+var baddieDeath;
+
 function preload() {
   // Create controllers now that game exists
   playerController = new Player(this.game);
@@ -25,6 +29,9 @@ function preload() {
   enemyController.preload();
   playerController.preload();
   arena.preload(this.game);
+
+  this.game.load.audio('madGod', [ 'assets/audio/SoundEffects/madGod.ogg' ]);
+  this.game.load.audio('baddieDeath', [ 'assets/audio/SoundEffects/baddieDeath.ogg' ]);
 }
 
 function create() {
@@ -47,7 +54,16 @@ function create() {
   cursors = this.game.input.keyboard.createCursorKeys();
   spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-  //  This will force player to decelerate and limit its speed
+  // Create sounds
+  baddieDeath = this.game.add.audio('baddieDeath');
+
+  // Create audio for arena
+  battleMusic = this.game.add.audio('madGod');
+
+  // Setting volume and loop
+  battleMusic.play('', 1, 0.3, true);
+
+  // This will force player to decelerate and limit its speed
   player.body.drag.set(550);
   player.body.maxVelocity.setTo(200, 200);
 
@@ -69,7 +85,7 @@ function create() {
 
 function update() {
   // Arena map
-  arena.update(this.game, [player, ...enemyController.enemyGroup.children]);
+  arena.update(this.game, [ player, ...enemyController.enemyGroup.children ]);
 
   this.game.physics.arcade.overlap(enemyController.enemyBullets, player, playerController.onBulletCollision, null, this);
 
@@ -102,8 +118,12 @@ function bulletHitEnemy(baddie, bullet) {
   }
 }
 
+function shutdown() {
+  this.game.sound.stopAll();
+}
+
 function render() {
   enemyController.render();
 }
 
-export default { preload, create, update, render };
+export default { preload, create, update, render, shutdown };
