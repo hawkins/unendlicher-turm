@@ -9,8 +9,8 @@ export default class Enemy {
     this.fireRate = 1000;
     this.nextFire = 0;
     this.alive = true;
-    var startX = this.game.world.randomX;
-    var startY = this.game.world.randomY;
+    var startX = (Math.random() * (28 - 1) + 1) / 30 * game.world.width;
+    var startY = (Math.random() * (28 - 1) + 1) / 30 * game.world.height;
 
     this.baddie = this.game.add.sprite(startX, startY, 'baddie');
     this.baddie.anchor.set(0.5);
