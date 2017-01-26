@@ -3,7 +3,7 @@ import Enemy from './enemy';
 export default class EnemyFactory {
   constructor(game, wave) {
     this.game = game;
-    this.wave = 5;
+    this.wave = wave;
 
     this.player = undefined;
     this.waveComplete = false;
