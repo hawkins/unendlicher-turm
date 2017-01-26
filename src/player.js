@@ -52,24 +52,46 @@ export default class Player {
 
     // Horizontal motion
     if (cursors.left.isDown || keyA.isDown) {
-      //  Move to the left
-      this.player.body.velocity.x = -store.speed;
+      if (cursors.up.isDown || keyW.isDown || cursors.down.isDOwn || keyS.isDown) {
+        this.player.body.velocity.x = (-store.speed) / Math.sqrt(2);
+      } else {
+        this.player.body.velocity.x = -store.speed;
+      }
       this.player.angle = 180;
     } else if (cursors.right.isDown || keyD.isDown) {
-      //  Move to the right
-      this.player.body.velocity.x = store.speed;
+      if (cursors.up.isDown || keyW.isDown || cursors.down.isDOwn || keyS.isDown) {
+        this.player.body.velocity.x = store.speed / Math.sqrt(2);
+      } else {
+        this.player.body.velocity.x = store.speed;
+      }
       this.player.angle = 0;
     }
 
     // Vertical motion
     if (cursors.up.isDown || keyW.isDown) {
-      // Move up
-      this.player.body.velocity.y = -store.speed;
-      this.player.angle = 270;
+      // Are we also moving sideways?
+      if (cursors.left.isDown || keyA.isDown) {
+        this.player.body.velocity.y = (-store.speed) / Math.sqrt(2);
+        this.player.angle = 225;
+      } else if (cursors.right.isDown || keyD.isDown) {
+        this.player.body.velocity.y = (-store.speed) / Math.sqrt(2);
+        this.player.angle = 315;
+      } else {
+        this.player.body.velocity.y = -store.speed;
+        this.player.angle = 270;
+      }
     } else if (cursors.down.isDown || keyS.isDown) {
-      // Move down
-      this.player.body.velocity.y = store.speed;
-      this.player.angle = 90;
+      // Are we also moving sideways?
+      if (cursors.left.isDown || keyA.isDown) {
+        this.player.body.velocity.y = store.speed / Math.sqrt(2);
+        this.player.angle = 135;
+      } else if (cursors.right.isDown || keyD.isDown) {
+        this.player.body.velocity.y = store.speed / Math.sqrt(2);
+        this.player.angle = 45;
+      } else {
+        this.player.body.velocity.y = store.speed;
+        this.player.angle = 90;
+      }
     }
 
     // Stop motion
@@ -90,6 +112,7 @@ export default class Player {
       bullet.reset(this.player.x, this.player.y);
 
       bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 500, this.game.input.activePointer);
+
       // Delay next bullet fire opportunity
       this.nextFire = this.game.time.now + this.fireRate;
 
