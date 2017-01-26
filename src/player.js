@@ -16,7 +16,7 @@ export default class Player {
   }
 
   create() {
-    this.player = this.game.add.sprite(96, (this.game.world.height / 2) - 16, 'TJ');
+    this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'TJ');
     this.player.anchor.setTo(0.5, 0.5);
 
     //  We need to enable physics on the player
@@ -80,6 +80,10 @@ export default class Player {
     }
   }
 
+  render() {
+    // TODO: Render a health bar
+  }
+
   // Shoot projectile toward mouse
   fire() {
     // If enough time has past since the last bullet firing
@@ -101,5 +105,13 @@ export default class Player {
   // When an enemy bullet hits us
   onBulletCollision(enemy, bullet) {
     bullet.kill();
+    store.health--;
+
+    // If health depleted, end the game
+    if (store.health <= 0) {
+      /* Debug */
+      store.health = 5;
+      this.game.state.start('town');
+    }
   }
 }

@@ -69,7 +69,7 @@ function create() {
 
 function update() {
   // Arena map
-  arena.update(this.game, [player, ...enemyController.enemyGroup.children]);
+  arena.update(this.game, [ player, ...enemyController.enemyGroup.children ]);
 
   this.game.physics.arcade.overlap(enemyController.enemyBullets, player, playerController.onBulletCollision, null, this);
 
@@ -103,6 +103,7 @@ function bulletHitEnemy(baddie, bullet) {
 }
 
 function render() {
+  playerController.render();
   enemyController.render();
 }
 
