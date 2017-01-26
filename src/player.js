@@ -80,10 +80,6 @@ export default class Player {
     }
   }
 
-  render() {
-    // TODO: Render a health bar
-  }
-
   // Shoot projectile toward mouse
   fire() {
     // If enough time has past since the last bullet firing

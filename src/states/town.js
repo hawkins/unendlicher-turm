@@ -3,6 +3,7 @@ import css from '../index.css';
 import Player from '../player';
 import town from '../maps/town';
 import Fullscreen from '../fullscreen';
+import GUI from '../gui';
 
 // eslint-disable-line import/no-unresolved
 // Controls
@@ -12,6 +13,7 @@ var cursors;
 var fullscreenController;
 var playerController;
 var player;
+var gui;
 
 // Audio
 var townMusic;
@@ -48,6 +50,10 @@ function create() {
   player.body.drag.set(550);
   player.body.maxVelocity.setTo(200, 200);
 
+  // Create the GUI
+  gui = new GUI(this.game);
+  gui.create();
+
   player.bringToTop();
 
   // Camera follows player
@@ -61,12 +67,19 @@ function update() {
   // Arena map
   town.update(this.game, [ player ]);
 
+  // Update the gui
+  gui.update();
+
   // Handle player update
   playerController.update(cursors);
+}
+
+function render() {
+  gui.render();
 }
 
 function shutdown() {
   this.game.sound.stopAll();
 }
 
-export default { preload, create, update, shutdown };
+export default { preload, create, update, render, shutdown };
