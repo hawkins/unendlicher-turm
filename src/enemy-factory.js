@@ -3,20 +3,8 @@ import Enemy from './enemy';
 export default class EnemyFactory {
   constructor(game, wave) {
     this.game = game;
-    this.wave = 3;
+    this.wave = 5;
 
-    // AI Movement ---
-    // enemey speed toward pixels/second
-    this.speed = 105;
-    // turn rate in degrees/frame
-    this.turn_rate = 30;
-    // degrees
-    this.jitter_limit = 20;
-    // milliseconds
-    this.jiiter_speed = 25;
-    //pixels, change this to change when the enemy starts to avoid player
-    this.avoid_distance = 150;
-    // ---------------
     this.player = undefined;
     this.waveComplete = false;
     this.maxExplosions = 10;
@@ -24,9 +12,6 @@ export default class EnemyFactory {
     this.enemyGroup = undefined;
     this.enemyBullets = undefined;
     this.explosions;
-
-    this.jitter = this.jitter_limit;
-    this.game.add.tween(this).to({ wobble: -this.jitter_limit }, this.jiiter_speed, Phaser.Easing.Sinusoidal.InOut, true, 0, Number.POSITIVE_INFINITY, true);
   }
 
   // Sets the enemies target, i.e., the player
@@ -91,53 +76,6 @@ export default class EnemyFactory {
         this.enemiesAlive++;
         this.game.physics.arcade.collide(this.player, this.enemies[i].baddie);
         this.game.physics.arcade.overlap(this.player.bullets, this.enemies[i].baddie, this.onHit, null, this);
-
-        // Grabs current angle between player and enemy
-        var targetAngle = this.game.math.angleBetween(this.enemies[i].baddie.x, this.enemies[i].baddie.y, this.player.x, this.player.y);
-        // adds target angle to wobble
-        // targetAngle += this.game.math.degToRad(this.wobble);
-        var avoidAngle = 0;
-        //if(this == this.enemies[i].baddie) return;
-        if (avoidAngle !== 0) return;
-        var distance = this.game.math.distance(this.player.x, this.player.y, this.enemies[i].baddie.x, this.enemies[i].baddie.y);
-
-        // works kind of like a dodging mechanism
-        if (distance < this.avoid_distance) {
-          // Zig
-          avoidAngle = Math.PI / 2;
-          //zag
-          if (Phaser.Utils.chanceRoll(10)) avoidAngle *= -1;
-        }
-
-        // Add the avoidance angle to steer clear of player
-        targetAngle += avoidAngle;
-
-        // Gradually (this.turn_rate) aim the missile towards the target angle
-        if (this.enemies[i].baddie.rotation !== targetAngle) {
-          // Calculate difference between the current angle and targetAngle
-          var delta = targetAngle - this.enemies[i].baddie.rotation;
-
-          // Keep it in range from -180 to 180 to make the most efficient turns.
-          if (delta > Math.PI) delta -= Math.PI * 2;
-          if (delta < -Math.PI) delta += Math.PI * 2;
-
-          if (delta > 0) {
-            // Turn clockwise
-            this.enemies[i].baddie.angle += this.turn_rate;
-          } else {
-            // Turn counter-clockwise
-            this.enemies[i].baddie.angle -= this.turn_rate;
-          }
-
-          // set angle to target angle if they are close
-          if (Math.abs(delta) < this.game.math.degToRad(this.turn)) {
-            this.enemies[i].baddie.rotation = targetAngle;
-          }
-        }
-
-        // Calculate velocity vector based on this.rotation and this.SPEED
-        this.enemies[i].baddie.body.velocity.x = Math.cos(this.enemies[i].baddie.rotation) * this.speed;
-        this.enemies[i].baddie.body.velocity.y = Math.sin(this.enemies[i].baddie.rotation) * this.speed;
         this.enemies[i].update();
       }
     }
