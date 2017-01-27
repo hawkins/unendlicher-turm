@@ -50,8 +50,7 @@ export default class Enemy {
       this.alive = false;
       this.baddie.kill();
 
-      store.coins++;
-
+      // store.coins++;
       return true;
     }
 
