@@ -1,10 +1,34 @@
 import store from '../store';
 
+// Create Variables for Tiled Layers
 var floor;
 var walls;
 var doors;
 var shelfItems;
 var items;
+var portals;
+
+// Create Variables for Object Layers
+var healthPortal;
+var strengthPortal;
+var speedPortal;
+
+// Create Variables for Portal Tile Position
+var healthStone;
+var strengthStone;
+var speedStone;
+
+// Create Variable for Object Layer
+var height;
+var name;
+var properties;
+var rectangle;
+var rotation;
+var type;
+var visible;
+var width;
+var x;
+var y;
 
 export default {
   preload: game => {
@@ -26,6 +50,12 @@ export default {
     items = map.createLayer('Items');
     doors = map.createLayer('Doors');
 
+    // Create object layer
+    healthPortal = map.objects.Portals[0];
+
+    // Assign Portal Position
+    healthStone = new Phaser.Rectangle(healthPortal.x, healthPortal.y, healthPortal.width, healthPortal.height);
+
     // Resize game world to match the floor
     floor.resizeWorld();
 
@@ -46,5 +76,12 @@ export default {
       game.physics.arcade.collide(item, items);
       game.physics.arcade.collide(item, doors);
     });
+  },
+  healthZone: playerPosition => {
+    if (healthStone.contains(playerPosition)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 };

@@ -9,11 +9,13 @@ import GUI from '../gui';
 // eslint-disable-line import/no-unresolved
 // Controls
 var cursors;
+var spacebar;
 
 // Controllers
 var fullscreenController;
 var playerController;
 var player;
+var shopActions;
 var gui;
 
 // Audio
@@ -40,6 +42,7 @@ function create() {
 
   // Create keys
   cursors = this.game.input.keyboard.createCursorKeys();
+  spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   // Create Audio for shop
   shopMusic = this.game.add.audio('adventure');
@@ -55,6 +58,7 @@ function create() {
   gui = new GUI(this.game);
   gui.create();
 
+  // Ensure player is visible
   player.bringToTop();
 
   // Camera follows player
@@ -62,6 +66,8 @@ function create() {
 
   // Enable fullscreen
   fullscreenController = new Fullscreen(this.game, 'F');
+
+  console.log(player);
 }
 
 function update() {
@@ -70,6 +76,10 @@ function update() {
 
   // Update the gui
   gui.update();
+
+  if (spacebar.isDown && shop.healthZone(player.position.x + player.width / 2, player.position.y + player.height / 2)) {
+    console.log('Player on Board');
+  }
 
   // Handle player update
   playerController.update(cursors);

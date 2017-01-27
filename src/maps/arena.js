@@ -50,11 +50,7 @@ export default {
       () => {
         if (this.unlocked) {
           store.wave++;
-          var up = Math.floor(Math.random() * (coinMax - coinMin)) + coinMin;
-          console.log('Added Coins ' + up);
-          console.log('Current Wave ' + store.wave);
-          store.coins = store.coins + up;
-          // this.unlocked = false;
+          store.coins = store.coins + (Math.floor(Math.random() * (coinMax - coinMin)) + coinMin);
           game.state.start('arena');
         }
       },
