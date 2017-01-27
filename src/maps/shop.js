@@ -1,7 +1,10 @@
+import store from '../store';
+
 var floor;
 var walls;
+var doors;
+var shelfItems;
 var items;
-var exitLayer;
 
 export default {
   preload: game => {
@@ -19,24 +22,29 @@ export default {
     // Create layers
     floor = map.createLayer('Floor');
     walls = map.createLayer('Walls');
+    shelfItems = map.createLayer('ShelfItems');
     items = map.createLayer('Items');
-    exitLayer = map.createLayer('ExitLayer');
+    doors = map.createLayer('Doors');
 
     // Resize game world to match the floor
-    layer.resizeWorld();
+    floor.resizeWorld();
 
     // Collide with player
     map.setCollisionBetween(1, 10000, true, walls);
+    map.setCollisionBetween(1, 10000, true, items);
+    map.setCollisionBetween(1, 10000, true, shelfItems);
+    map.setCollisionBetween(1, 10000, true, doors);
 
     // Enter town when player collides with exit layer
-    map.setTileLocationCallback(1, 14, 1, 2, () => (game.state.start('town')), this, exitLayer);
+    map.setTileLocationCallback(0, 7, 1, 1, () => game.state.start('town'), this, doors);
+    map.setTileLocationCallback(27, 7, 1, 1, () => game.state.start('arena'), this, doors);
   },
   update: (game, collidables) => {
     collidables.forEach(item => {
       // Collide with item
       game.physics.arcade.collide(item, walls);
       game.physics.arcade.collide(item, items);
-      game.physics.arcade.collide(item, exitLayer);
+      game.physics.arcade.collide(item, doors);
     });
   }
 };
