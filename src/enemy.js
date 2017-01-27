@@ -1,3 +1,5 @@
+import store from './store';
+
 export default class Enemy {
   constructor(index, game, player, bullets, health, damage) {
     this.game = game;
@@ -6,11 +8,23 @@ export default class Enemy {
     this.health = health;
     this.damage = damage;
 
+    // AI Movement ---
+    // enemey speed toward playerpixels/second
+    this.speed = 125;
+    // turn rate in degrees/frame
+    this.turn_rate = 10;
+    // degrees, how much the emeney moves around when close to player
+    this.jitter_limit = 200;
+    // milliseconds and how quickly
+    this.jitter_speed = 10;
+    //pixels, change this to change when the enemy starts to avoid player
+    this.avoid_distance = 175;
+    // ---------------
     this.fireRate = 1000;
     this.nextFire = 0;
     this.alive = true;
-    var startX = this.game.world.randomX;
-    var startY = this.game.world.randomY;
+    var startX = (Math.random() * (28 - 1) + 1) / 30 * game.world.width;
+    var startY = (Math.random() * (28 - 1) + 1) / 30 * game.world.height;
 
     this.baddie = this.game.add.sprite(startX, startY, 'baddie');
     this.baddie.anchor.set(0.5);
@@ -21,6 +35,8 @@ export default class Enemy {
     this.baddie.body.bounce.setTo(1, 1);
     this.baddie.angle = this.game.rnd.angle();
 
+    this.jitter = this.jitter_limit;
+    this.game.add.tween(this).to({ wobble: -this.jitter_limit }, this.jitter_speed, Phaser.Easing.Sinusoidal.InOut, true, 0, Number.POSITIVE_INFINITY, true);
     // increasing this will increase the movement speed of the enemies
     this.game.physics.arcade.velocityFromRotation(this.baddie.rotation, 90, this.baddie.body.velocity);
   }
@@ -33,8 +49,12 @@ export default class Enemy {
     if (this.health <= 0) {
       this.alive = false;
       this.baddie.kill();
+
+      store.coins++;
+
       return true;
     }
+
     return false;
   }
 
@@ -48,6 +68,55 @@ export default class Enemy {
         bullet.reset(this.baddie.x, this.baddie.y);
         bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
       }
+    }
+
+    // Determine how many mobs are still alive and draw this as text
+    //this.enemiesAlive = 0;
+    if (this.alive) {
+      // Grabs current angle between player and enemy
+      var targetAngle = this.game.math.angleBetween(this.baddie.x, this.baddie.y, this.player.x, this.player.y);
+      // adds target angle to wobble
+      var avoidAngle = 0;
+      if (this == this.baddie) return;
+      if (avoidAngle !== 0) return;
+      var distance = this.game.math.distance(this.player.x, this.player.y, this.baddie.x, this.baddie.y);
+
+      // works kind of like a dodging mechanism
+      if (distance < this.avoid_distance) {
+        // Zig away from player at postive angle
+        avoidAngle = Math.PI / 1.3;
+        //zag ( on chance move the oppsite direction), negative angle
+        if (Phaser.Utils.chanceRoll(40)) avoidAngle *= -1;
+      }
+
+      // Add the avoidance angle to steer clear of player
+      targetAngle += avoidAngle;
+
+      // Gradually (this.turn_rate) aim towards the target angle
+      if (this.baddie.rotation !== targetAngle) {
+        // Calculate difference between the current angle and targetAngle
+        var delta = targetAngle - this.baddie.rotation;
+
+        // Keep it in range from -180 to 180 to make the most efficient turns.
+        if (delta > Math.PI) delta -= Math.PI * 2;
+        if (delta < -Math.PI) delta += Math.PI * 2;
+
+        // Turn clockwise or counter-clockwise
+        if (delta > 0) {
+          this.baddie.angle += this.turn_rate;
+        } else {
+          this.baddie.angle -= this.turn_rate;
+        }
+
+        // set angle to target angle if they are close
+        if (Math.abs(delta) < this.game.math.degToRad(this.turn)) {
+          this.baddie.rotation = targetAngle;
+        }
+      }
+
+      // Calculate velocity vector based on this.rotation and this.SPEED
+      this.baddie.body.velocity.x = Math.cos(this.baddie.rotation) * this.speed;
+      this.baddie.body.velocity.y = Math.sin(this.baddie.rotation) * this.speed;
     }
   }
 

@@ -101,5 +101,13 @@ export default class Player {
   // When an enemy bullet hits us
   onBulletCollision(enemy, bullet) {
     bullet.kill();
+    store.health--;
+
+    // If health depleted, end the game
+    if (store.health <= 0) {
+      /* Debug */
+      store.health = 5;
+      this.game.state.start('town');
+    }
   }
 }

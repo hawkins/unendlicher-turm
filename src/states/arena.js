@@ -5,6 +5,7 @@ import arena from '../maps/arena';
 import Fullscreen from '../fullscreen';
 import EnemyFactory from '../enemy-factory';
 import store from '../store';
+import GUI from '../gui';
 
 // Keys
 var cursors;
@@ -15,6 +16,11 @@ var fullscreenController;
 var playerController;
 var enemyController;
 var player;
+var gui;
+
+// Audio
+var battleMusic;
+var baddieDeath;
 
 function preload() {
   // Create controllers now that game exists
@@ -25,6 +31,9 @@ function preload() {
   enemyController.preload();
   playerController.preload();
   arena.preload(this.game);
+
+  this.game.load.audio('madGod', [ 'assets/audio/SoundEffects/madGod.ogg' ]);
+  this.game.load.audio('baddieDeath', [ 'assets/audio/SoundEffects/baddieDeath.ogg' ]);
 }
 
 function create() {
@@ -47,7 +56,16 @@ function create() {
   cursors = this.game.input.keyboard.createCursorKeys();
   spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-  //  This will force player to decelerate and limit its speed
+  // Create sounds
+  baddieDeath = this.game.add.audio('baddieDeath');
+
+  // Create audio for arena
+  battleMusic = this.game.add.audio('madGod');
+
+  // Setting volume and loop
+  battleMusic.play('', 1, 0.3, true);
+
+  // This will force player to decelerate and limit its speed
   player.body.drag.set(550);
   player.body.maxVelocity.setTo(200, 200);
 
@@ -56,6 +74,10 @@ function create() {
 
   // Add hit handler to enemies
   enemyController.setOnHit(bulletHitEnemy);
+
+  // Create GUI
+  gui = new GUI(this.game);
+  gui.create();
 
   // Ensure player is visible
   player.bringToTop();
@@ -71,7 +93,7 @@ function update() {
   // Arena map
   arena.update(this.game, [ player, ...enemyController.enemyGroup.children ]);
 
-  this.game.physics.arcade.overlap(enemyController.enemyBullets, player, playerController.onBulletCollision, null, this);
+  this.game.physics.arcade.overlap(enemyController.enemyBullets, player, playerController.onBulletCollision, null, playerController);
 
   // Update enemies
   enemyController.update();
@@ -83,6 +105,9 @@ function update() {
 
   // Handle player update
   playerController.update(cursors);
+
+  // Update GUI
+  gui.update();
 
   // If the wave is complete, unlock the next arena
   if (enemyController.waveComplete) {
@@ -102,8 +127,13 @@ function bulletHitEnemy(baddie, bullet) {
   }
 }
 
-function render() {
-  enemyController.render();
+function shutdown() {
+  this.game.sound.stopAll();
 }
 
-export default { preload, create, update, render };
+function render() {
+  enemyController.render();
+  gui.render();
+}
+
+export default { preload, create, update, render, shutdown };
