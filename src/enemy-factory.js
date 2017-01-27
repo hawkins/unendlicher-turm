@@ -26,10 +26,7 @@ export default class EnemyFactory {
 
   // Returns the enemies associated with this factory
   getEnemies() {
-    return {
-      list: this.enemies,
-      group: this.enemyGroup
-    };
+    return { list: this.enemies, group: this.enemyGroup };
   }
 
   preload() {
@@ -57,7 +54,7 @@ export default class EnemyFactory {
     this.explosions = this.game.add.group();
     // Prepare explosion pool
     for (var i = 0; i < this.maxExplosions; i++) {
-      var explosionAnimation = this.explosions.create(0, 0, 'kaboom', [0], false);
+      var explosionAnimation = this.explosions.create(0, 0, 'kaboom', [ 0 ], false);
       explosionAnimation.anchor.setTo(0.5, 0.5);
       explosionAnimation.animations.add('kaboom');
     }
@@ -95,20 +92,16 @@ export default class EnemyFactory {
 
   // Calculate spawn characteristics given a wave number
   getSpawn(wave) {
-    var spawn = {
-      number: 0,
-      health: 1,
-      damage: 1
-    };
+    var spawn = { number: 0, health: 1, damage: 1 };
 
     spawn.number = wave;
     if (wave % 5 === 0) {
       spawn.number *= 1.2;
     }
 
-    spawn.health = (wave / 4) + 1;
+    spawn.health = wave / 4 + 1;
 
-    spawn.damage = (wave / 3) + 1;
+    spawn.damage = wave / 3 + 1;
 
     return spawn;
   }
