@@ -1,3 +1,5 @@
+import store from './store';
+
 export default class Enemy {
   constructor(index, game, player, bullets, health, damage) {
     this.game = game;
@@ -47,8 +49,12 @@ export default class Enemy {
     if (this.health <= 0) {
       this.alive = false;
       this.baddie.kill();
+
+      store.coins++;
+
       return true;
     }
+
     return false;
   }
 

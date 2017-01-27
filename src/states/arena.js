@@ -5,6 +5,7 @@ import arena from '../maps/arena';
 import Fullscreen from '../fullscreen';
 import EnemyFactory from '../enemy-factory';
 import store from '../store';
+import GUI from '../gui';
 
 // Keys
 var cursors;
@@ -15,6 +16,7 @@ var fullscreenController;
 var playerController;
 var enemyController;
 var player;
+var gui;
 
 // Audio
 var battleMusic;
@@ -73,6 +75,10 @@ function create() {
   // Add hit handler to enemies
   enemyController.setOnHit(bulletHitEnemy);
 
+  // Create GUI
+  gui = new GUI(this.game);
+  gui.create();
+
   // Ensure player is visible
   player.bringToTop();
 
@@ -87,7 +93,7 @@ function update() {
   // Arena map
   arena.update(this.game, [ player, ...enemyController.enemyGroup.children ]);
 
-  this.game.physics.arcade.overlap(enemyController.enemyBullets, player, playerController.onBulletCollision, null, this);
+  this.game.physics.arcade.overlap(enemyController.enemyBullets, player, playerController.onBulletCollision, null, playerController);
 
   // Update enemies
   enemyController.update();
@@ -99,6 +105,9 @@ function update() {
 
   // Handle player update
   playerController.update(cursors);
+
+  // Update GUI
+  gui.update();
 
   // If the wave is complete, unlock the next arena
   if (enemyController.waveComplete) {
@@ -124,6 +133,7 @@ function shutdown() {
 
 function render() {
   enemyController.render();
+  gui.render();
 }
 
 export default { preload, create, update, render, shutdown };
