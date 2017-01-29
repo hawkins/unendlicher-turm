@@ -21,7 +21,7 @@ export default class Enemy {
     this.avoid_distance = 175;
     // ---------------
     this.fireRate = 1000;
-    this.nextFire = 0;
+    this.nextFire = this.game.time.now + 1000;
     this.alive = true;
     var startX = (Math.random() * (28 - 1) + 1) / 30 * game.world.width;
     var startY = (Math.random() * (28 - 1) + 1) / 30 * game.world.height;
@@ -60,18 +60,10 @@ export default class Enemy {
 
   // Controls what the enemy does on every update
   update() {
-    if (this.game.physics.arcade.distanceBetween(this.baddie, this.player) < 300) {
-      if (this.game.time.now > this.nextFire) {
-        this.nextFire = this.game.time.now + this.fireRate;
+    // Attack
+    this.fire();
 
-        var bullet = this.bullets.getFirstDead();
-        bullet.reset(this.baddie.x, this.baddie.y);
-        bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
-      }
-    }
-
-    // Determine how many mobs are still alive and draw this as text
-    //this.enemiesAlive = 0;
+    // Move
     if (this.alive) {
       // Grabs current angle between player and enemy
       var targetAngle = this.game.math.angleBetween(this.baddie.x, this.baddie.y, this.player.x, this.player.y);
@@ -85,7 +77,7 @@ export default class Enemy {
       if (distance < this.avoid_distance) {
         // Zig away from player at postive angle
         avoidAngle = Math.PI / 1.3;
-        //zag ( on chance move the oppsite direction), negative angle
+        // Zag ( on chance move the oppsite direction), negative angle
         if (Phaser.Utils.chanceRoll(40)) avoidAngle *= -1;
       }
 
@@ -123,5 +115,19 @@ export default class Enemy {
   // Return the sprite object associated with this enemy
   getSprite() {
     return this.baddie;
+  }
+
+  fire() {
+    // If we're close enough
+    if (this.game.physics.arcade.distanceBetween(this.baddie, this.player) < 300) {
+      // If we can fire
+      if (this.game.time.now > this.nextFire) {
+        this.nextFire = this.game.time.now + this.fireRate;
+
+        var bullet = this.bullets.getFirstDead();
+        bullet.reset(this.baddie.x, this.baddie.y);
+        bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
+      }
+    }
   }
 }
