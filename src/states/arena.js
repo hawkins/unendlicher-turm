@@ -100,7 +100,7 @@ function update() {
 
   // If they're clicking or hitting spacebar, fire the weapon
   if (this.game.input.activePointer.isDown || spacebar.isDown) {
-    playerController.fire(); //  Boom!
+    playerController.fire(); // Boom!
   }
 
   // Handle player update

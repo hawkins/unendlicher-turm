@@ -89,6 +89,9 @@ export default class EnemyFactory {
       }
     }
 
+    // Make enemies collide with eachother
+    this.game.physics.arcade.collide(this.enemyGroup, this.enemyGroup);
+
     // If the wave has been completed
     if (this.enemiesAlive === 0) {
       this.waveComplete = true;
