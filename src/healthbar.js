@@ -119,7 +119,7 @@ HealthBar.prototype.setWidth = function(newWidth) {
   if (this.flipped) {
     newWidth = (-1) * newWidth;
   }
-  this.game.add.tween(this.barSprite).to({ width: newWidth }, this.config.animationDuration, Phaser.Easing.Linear.None, true);
+  this.game.add.tween(this.barSprite).to({ width: newWidth }, this.config.animationDuration, null, true);
 };
 
 HealthBar.prototype.setFixedToCamera = function(fixedToCamera) {

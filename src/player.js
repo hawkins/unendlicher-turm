@@ -7,6 +7,8 @@ export default class Player {
     this.deathmoans;
     this.fireRate = 300;
     this.nextFire = 0;
+    this.hurtRate = 1500;
+    this.nextHurt = this.game.time.now + 1500;
   }
 
   preload() {
@@ -106,14 +108,21 @@ export default class Player {
 
   // When an enemy bullet hits us
   onBulletCollision(player, bullet) {
+    // Skip if it's not been long enough since the last time we took damage
+    if (this.game.time.now <= this.nextHurt) {
+      return;
+    }
+
+    // Set next hurt availability
+    this.nextHurt = this.game.time.now + this.hurtRate;
+
+    // Hurt the player
     store.health -= bullet.damage;
     bullet.kill();
 
     // If health depleted, end the game
     if (store.health <= 0) {
-      /* Debug */
-      store.health = store.maxHealth;
-      this.game.state.start('town');
+      this.onDeath();
     }
   }
 
@@ -123,9 +132,13 @@ export default class Player {
 
     // If health depleted, end the game
     if (store.health <= 0) {
-      /* Debug */
-      store.health = store.maxHealth;
-      this.game.state.start('town');
+      this.onDeath();
     }
+  }
+
+  onDeath() {
+    /* Debug */
+    store.health = store.maxHealth;
+    this.game.state.start('town');
   }
 }

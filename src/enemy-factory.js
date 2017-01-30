@@ -157,8 +157,8 @@ export default class EnemyFactory {
     spawn.archer.health = wave / 12 + 1;
 
     spawn.knight.damage = wave / 5 + 1;
-    spawn.wizard.damage = wave / 3 + 1;
-    spawn.archer.health = wave / 2 + 1;
+    spawn.wizard.damage = wave / 3;
+    spawn.archer.damage = wave / 2;
 
     return spawn;
   }

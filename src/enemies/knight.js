@@ -8,7 +8,7 @@ export default class Knight {
     this.damage = damage;
 
     // Enemy speed toward player in pixels/second
-    this.speed = 125;
+    this.speed = 100;
     // Turn rate in degrees/frame
     this.turn_rate = 10;
     // How much the emeney moves around when close to player
@@ -36,7 +36,7 @@ export default class Knight {
     this.baddie.angle = this.game.rnd.angle();
 
     this.game.add.tween(this).to({ wobble: -this.jitter_limit }, this.jitter_speed, Phaser.Easing.Sinusoidal.InOut, true, 0, Number.POSITIVE_INFINITY, true);
-    this.game.physics.arcade.velocityFromRotation(this.baddie.rotation, 100 + index * 1.5, this.baddie.body.velocity);
+    this.game.physics.arcade.velocityFromRotation(this.baddie.rotation, this.speed + index * 2, this.baddie.body.velocity);
   }
 
   // Hurts the enemy and returns true if the enemy was killed
