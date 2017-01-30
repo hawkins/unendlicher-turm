@@ -11,7 +11,8 @@ export default class Player {
   }
 
   preload() {
-    this.game.load.spritesheet('TJ', 'assets/images/TJ_topdown.png', 32, 48);
+    this.game.load.image('bullet', 'assets/images/bullet.png');
+    this.game.load.image('TJ', 'assets/images/TJ_topdown.png');
     // Audio Files
     this.game.load.audio('firestrike', [ 'assets/audio/SoundEffects/firestrike.ogg' ]);
   }
