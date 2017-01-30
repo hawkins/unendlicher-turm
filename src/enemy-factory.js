@@ -1,5 +1,6 @@
-import Wizard from './enemies/wizard';
 import Knight from './enemies/knight';
+import Wizard from './enemies/wizard';
+import Archer from './enemies/archer';
 
 export default class EnemyFactory {
   constructor(game, wave) {
@@ -11,8 +12,9 @@ export default class EnemyFactory {
     this.maxExplosions = 10;
     this.enemies = [];
     this.enemyGroup = undefined;
-    this.enemyBullets = undefined;
-    this.explosions;
+    this.enemySpells = undefined;
+    this.enemyArrows = undefined;
+    this.explosions = undefined;
   }
 
   // Sets the enemies target, i.e., the player
@@ -31,24 +33,36 @@ export default class EnemyFactory {
   }
 
   preload() {
-    this.game.load.image('bullet_2', 'assets/images/bullet_2.png');
-    this.game.load.image('Wizard', 'assets/images/Wizard.png');
+    this.game.load.image('spell', 'assets/images/bullet_2.png');
+    this.game.load.image('arrow', 'assets/images/bullet_3.png');
     this.game.load.image('Knight', 'assets/images/Knight.png');
+    this.game.load.image('Wizard', 'assets/images/Wizard.png');
+    this.game.load.image('Archer', 'assets/images/Archer.png');
     this.game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
   }
 
   create() {
     this.enemies = [];
 
-    // Enemy bullet physics
-    this.enemyBullets = this.game.add.group();
-    this.enemyBullets.enableBody = true;
-    this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
-    this.enemyBullets.createMultiple(100, 'bullet_2');
-    this.enemyBullets.setAll('anchor.x', 0.5);
-    this.enemyBullets.setAll('anchor.y', 0.5);
-    this.enemyBullets.setAll('outOfBoundsKill', true);
-    this.enemyBullets.setAll('checkWorldBounds', true);
+    // Enemy spell physics
+    this.enemySpells = this.game.add.group();
+    this.enemySpells.enableBody = true;
+    this.enemySpells.physicsBodyType = Phaser.Physics.ARCADE;
+    this.enemySpells.createMultiple(100, 'spell');
+    this.enemySpells.setAll('anchor.x', 0.5);
+    this.enemySpells.setAll('anchor.y', 0.5);
+    this.enemySpells.setAll('outOfBoundsKill', true);
+    this.enemySpells.setAll('checkWorldBounds', true);
+
+    // Enemy arrow physics
+    this.enemyArrows = this.game.add.group();
+    this.enemyArrows.enableBody = true;
+    this.enemyArrows.physicsBodyType = Phaser.Physics.ARCADE;
+    this.enemyArrows.createMultiple(100, 'arrow');
+    this.enemyArrows.setAll('anchor.x', 0.5);
+    this.enemyArrows.setAll('anchor.y', 0.5);
+    this.enemyArrows.setAll('outOfBoundsKill', true);
+    this.enemyArrows.setAll('checkWorldBounds', true);
 
     // TODO: Enemy physics
     this.enemyGroup = this.game.add.group();
@@ -71,7 +85,13 @@ export default class EnemyFactory {
     }
     // Wizards
     for (var i = 0; i < this.spawn.wizard.number; i++) {
-      var enemy = new Wizard(i, this.game, this.player, this.enemyBullets, this.spawn.wizard.health, this.spawn.wizard.damage);
+      var enemy = new Wizard(i, this.game, this.player, this.enemySpells, this.spawn.wizard.health, this.spawn.wizard.damage);
+      this.enemies.push(enemy);
+      this.enemyGroup.add(enemy.getSprite());
+    }
+    // Archers
+    for (var i = 0; i < this.spawn.archer.number; i++) {
+      var enemy = new Archer(i, this.game, this.player, this.enemyArrows, this.spawn.archer.health, this.spawn.archer.damage);
       this.enemies.push(enemy);
       this.enemyGroup.add(enemy.getSprite());
     }
@@ -104,7 +124,7 @@ export default class EnemyFactory {
 
   // Calculate spawn characteristics given a wave number
   getSpawn(wave) {
-    var spawn = { knight: { number: 0, health: 1, damage: 1 }, wizard: { number: 0, health: 1, damage: 1 } };
+    var spawn = { knight: { number: 0, health: 1, damage: 1 }, wizard: { number: 0, health: 1, damage: 1 }, archer: { number: 0, health: 1, damage: 1 } };
 
     spawn.knight.number = wave;
     if (wave % 5 === 0) {
@@ -118,17 +138,27 @@ export default class EnemyFactory {
     if (wave % 3 === 0) {
       spawn.wizard.number *= 1.5;
     }
-    spawn.wizard.number = Math.round(spawn.wizard.number);
+
+    // Archers show up after 10 waves
+    if (wave > 10) {
+      spawn.archer.number = wave - 8;
+    }
+    if (wave % 4 === 0) {
+      spawn.archer.number *= 1.5;
+    }
+
     spawn.knight.number = Math.round(spawn.knight.number);
+    spawn.wizard.number = Math.round(spawn.wizard.number);
+    spawn.archer.number = Math.round(spawn.archer.number);
     spawn.number = spawn.wizard.number + spawn.knight.number;
 
     spawn.knight.health = wave / 4 + 1;
     spawn.wizard.health = wave / 7 + 1;
+    spawn.archer.health = wave / 12 + 1;
 
     spawn.knight.damage = wave / 5 + 1;
     spawn.wizard.damage = wave / 3 + 1;
-
-    console.log(spawn);
+    spawn.archer.health = wave / 2 + 1;
 
     return spawn;
   }

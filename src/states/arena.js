@@ -93,7 +93,9 @@ function update() {
   // Arena map
   arena.update(this.game, [ player, ...enemyController.enemyGroup.children ]);
 
-  this.game.physics.arcade.overlap(enemyController.enemyBullets, player, playerController.onBulletCollision, null, playerController);
+  // Collide projectiles and player
+  this.game.physics.arcade.overlap(enemyController.enemySpells, player, playerController.onBulletCollision, null, playerController);
+  this.game.physics.arcade.overlap(enemyController.enemyArrows, player, playerController.onBulletCollision, null, playerController);
 
   // Update enemies
   enemyController.update();

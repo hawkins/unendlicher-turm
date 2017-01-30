@@ -1,6 +1,6 @@
 import store from '../store';
 
-export default class Wizard {
+export default class Archer {
   constructor(index, game, player, bullets, health, damage) {
     this.game = game;
     this.player = player;
@@ -17,10 +17,10 @@ export default class Wizard {
     // How quickly they jitter in milliseconds
     this.jitter_speed = 10;
     // Distance to maintain from player in pixels
-    this.avoid_distance = 250;
+    this.avoid_distance = 350;
 
-    this.fireRate = 1000;
-    this.nextFire = this.game.time.now + 900 + 500 * Math.random();
+    this.fireRate = 700;
+    this.nextFire = this.game.time.now + 1000 + this.fireRate * Math.random();
     this.alive = true;
     var startX = (Math.random() * (28 - 1) + 1) / 30 * game.world.width;
     var startY = (Math.random() * (28 - 1) + 1) / 30 * game.world.height;
@@ -28,7 +28,7 @@ export default class Wizard {
     // JavaScript this is strange sometimes
     var controller = this;
 
-    this.baddie = this.game.add.sprite(startX, startY, 'Wizard');
+    this.baddie = this.game.add.sprite(startX, startY, 'Archer');
     this.baddie.controller = controller;
 
     this.baddie.anchor.set(0.5);
@@ -122,7 +122,7 @@ export default class Wizard {
 
   fire() {
     // If we're close enough
-    if (this.game.physics.arcade.distanceBetween(this.baddie, this.player) < 300) {
+    if (this.game.physics.arcade.distanceBetween(this.baddie, this.player) < 600) {
       // If we can fire
       if (this.game.time.now > this.nextFire) {
         this.nextFire = this.game.time.now + this.fireRate;

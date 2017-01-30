@@ -1,6 +1,6 @@
 import store from '../store';
 
-export default class Enemy {
+export default class Knight {
   constructor(index, game, player, health, damage) {
     this.game = game;
     this.player = player;
