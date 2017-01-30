@@ -5,11 +5,15 @@ import shop from '../maps/shop';
 import Fullscreen from '../fullscreen';
 import store from '../store';
 import GUI from '../gui';
+import powerUps from '../powerups';
 
 // eslint-disable-line import/no-unresolved
 // Controls
 var cursors;
 var spacebar;
+var bKey;
+var hKey;
+var zKey;
 
 // Controllers
 var fullscreenController;
@@ -17,9 +21,14 @@ var playerController;
 var player;
 var shopActions;
 var gui;
+var powerups;
 
 // Audio
 var shopMusic;
+
+// Click Rates
+var clickRate = 2000;
+var nextClick;
 
 function preload() {
   // Load audio file
@@ -44,6 +53,13 @@ function create() {
   cursors = this.game.input.keyboard.createCursorKeys();
   spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
+  // Purchase Keys
+  bKey = this.game.input.keyboard.addKey(Phaser.Keyboard.B);
+  hKey = this.game.input.keyboard.addKey(Phaser.Keyboard.H);
+  zKey = this.game.input.keyboard.addKey(Phaser.Keyboard.Z);
+
+  nextClick = this.game.time.now + 1000;
+
   // Create Audio for shop
   shopMusic = this.game.add.audio('adventure');
 
@@ -57,6 +73,9 @@ function create() {
   // Create the GUI
   gui = new GUI(this.game);
   gui.create();
+
+  // Create the PowerUps
+  powerups = new powerUps(this.game);
 
   // Ensure player is visible
   player.bringToTop();
@@ -77,12 +96,39 @@ function update() {
   // Update the gui
   gui.update();
 
-  if (spacebar.isDown && shop.healthZone(player.position.x + player.width / 2, player.position.y + player.height / 2)) {
-    console.log('Player on Board');
-  }
-
   // Handle player update
   playerController.update(cursors);
+
+  // Update Player Position
+  // playerPosition = new Phaser.Rectangle(player.x, player.y, player.width, player.height);
+  if (hKey.isDown) {
+    if (timer(this.game)) {
+      console.log('Heal you wish!');
+      console.log('Current Max: ' + store.maxHealth);
+      console.log('Current Coins: ' + store.coins);
+      powerups.healthZone();
+      console.log('New Max: ' + store.maxHealth);
+      console.log('New Coins: ' + store.coins);
+    }
+  } else if (bKey.isDown) {
+    if (timer(this.game)) {
+      console.log('Bulk up!');
+      console.log('Current Max: ' + store.damage);
+      console.log('Current Coins: ' + store.coins);
+      powerups.damageZone();
+      console.log('New Max: ' + store.damage);
+      console.log('New Coins: ' + store.coins);
+    }
+  } else if (zKey.isDown) {
+    if (timer(this.game)) {
+      console.log('Zoom Zoom!');
+      console.log('Current Max: ' + store.speed);
+      console.log('Current Coins: ' + store.coins);
+      powerups.speedZone();
+      console.log('New Max: ' + store.speed);
+      console.log('New Coins: ' + store.coins);
+    }
+  }
 }
 
 function render() {
@@ -93,4 +139,14 @@ function shutdown() {
   this.game.sound.stopAll();
 }
 
-export default { preload, create, update, render, shutdown };
+function timer(instance) {
+  // If we can purchase
+  if (instance.time.now > nextClick) {
+    nextClick = instance.time.now + clickRate;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export default { preload, create, update, render, shutdown, timer };

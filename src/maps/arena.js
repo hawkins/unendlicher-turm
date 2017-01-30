@@ -5,7 +5,7 @@ var layer2;
 var entranceLayer;
 var exitLayer;
 
-// Coins
+// Coins Distribution
 var coinMax = 4;
 var coinMin = 1;
 
