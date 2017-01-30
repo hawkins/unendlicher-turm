@@ -1,32 +1,32 @@
-import store from './store';
+import store from '../store';
 
 export default class Enemy {
-  constructor(index, game, player, bullets, health, damage) {
+  constructor(index, game, player, health, damage) {
     this.game = game;
     this.player = player;
-    this.bullets = bullets;
     this.health = health;
     this.damage = damage;
 
-    // AI Movement ---
-    // enemey speed toward playerpixels/second
+    // Enemy speed toward player in pixels/second
     this.speed = 125;
-    // turn rate in degrees/frame
+    // Turn rate in degrees/frame
     this.turn_rate = 10;
-    // degrees, how much the emeney moves around when close to player
+    // How much the emeney moves around when close to player
     this.jitter_limit = 200;
-    // milliseconds and how quickly
+    // How quickly they jitter in milliseconds
     this.jitter_speed = 10;
-    //pixels, change this to change when the enemy starts to avoid player
-    this.avoid_distance = 175;
-    // ---------------
-    this.fireRate = 1000;
-    this.nextFire = this.game.time.now + 1000;
+
     this.alive = true;
     var startX = (Math.random() * (28 - 1) + 1) / 30 * game.world.width;
     var startY = (Math.random() * (28 - 1) + 1) / 30 * game.world.height;
 
-    this.baddie = this.game.add.sprite(startX, startY, 'baddie');
+    // JavaScript this is strange sometimes
+    var controller = this;
+
+    this.baddie = this.game.add.sprite(startX, startY, 'Knight');
+    this.baddie.controller = controller;
+
+    this.baddie.scale.setTo(0.75, 0.75);
     this.baddie.anchor.set(0.5);
     this.baddie.name = index.toString();
     this.game.physics.enable(this.baddie, Phaser.Physics.ARCADE);
@@ -35,10 +35,8 @@ export default class Enemy {
     this.baddie.body.bounce.setTo(1, 1);
     this.baddie.angle = this.game.rnd.angle();
 
-    this.jitter = this.jitter_limit;
     this.game.add.tween(this).to({ wobble: -this.jitter_limit }, this.jitter_speed, Phaser.Easing.Sinusoidal.InOut, true, 0, Number.POSITIVE_INFINITY, true);
-    // increasing this will increase the movement speed of the enemies
-    this.game.physics.arcade.velocityFromRotation(this.baddie.rotation, 90, this.baddie.body.velocity);
+    this.game.physics.arcade.velocityFromRotation(this.baddie.rotation, 100 + index * 1.5, this.baddie.body.velocity);
   }
 
   // Hurts the enemy and returns true if the enemy was killed
@@ -60,9 +58,6 @@ export default class Enemy {
 
   // Controls what the enemy does on every update
   update() {
-    // Attack
-    this.fire();
-
     // Move
     if (this.alive) {
       // Grabs current angle between player and enemy
@@ -72,14 +67,6 @@ export default class Enemy {
       if (this == this.baddie) return;
       if (avoidAngle !== 0) return;
       var distance = this.game.math.distance(this.player.x, this.player.y, this.baddie.x, this.baddie.y);
-
-      // works kind of like a dodging mechanism
-      if (distance < this.avoid_distance) {
-        // Zig away from player at postive angle
-        avoidAngle = Math.PI / 1.3;
-        // Zag ( on chance move the oppsite direction), negative angle
-        if (Phaser.Utils.chanceRoll(40)) avoidAngle *= -1;
-      }
 
       // Add the avoidance angle to steer clear of player
       targetAngle += avoidAngle;
@@ -106,6 +93,11 @@ export default class Enemy {
         }
       }
 
+      // Attack the player if we're close enough
+      if (distance < 40) {
+        this.player.controller.onEnemyCollision(this);
+      }
+
       // Calculate velocity vector based on this.rotation and this.SPEED
       this.baddie.body.velocity.x = Math.cos(this.baddie.rotation) * this.speed;
       this.baddie.body.velocity.y = Math.sin(this.baddie.rotation) * this.speed;
@@ -115,19 +107,5 @@ export default class Enemy {
   // Return the sprite object associated with this enemy
   getSprite() {
     return this.baddie;
-  }
-
-  fire() {
-    // If we're close enough
-    if (this.game.physics.arcade.distanceBetween(this.baddie, this.player) < 300) {
-      // If we can fire
-      if (this.game.time.now > this.nextFire) {
-        this.nextFire = this.game.time.now + this.fireRate;
-
-        var bullet = this.bullets.getFirstDead();
-        bullet.reset(this.baddie.x, this.baddie.y);
-        bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
-      }
-    }
   }
 }

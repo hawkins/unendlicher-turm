@@ -118,7 +118,7 @@ function update() {
 // Explosion Animation / Destroy enemies
 function bulletHitEnemy(baddie, bullet) {
   bullet.kill();
-  var destroyed = enemyController.enemies[baddie.name].hurt();
+  var destroyed = baddie.controller.hurt();
 
   if (destroyed) {
     var explosionAnimation = enemyController.explosions.getFirstExists(false);

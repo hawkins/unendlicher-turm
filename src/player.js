@@ -18,6 +18,11 @@ export default class Player {
 
   create() {
     this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'TJ');
+
+    // JavaScript this is strange sometimes
+    var controller = this;
+    this.player.controller = controller;
+
     this.player.anchor.setTo(0.5, 0.5);
 
     //  We need to enable physics on the player
@@ -100,14 +105,26 @@ export default class Player {
   }
 
   // When an enemy bullet hits us
-  onBulletCollision(enemy, bullet) {
+  onBulletCollision(player, bullet) {
+    store.health -= bullet.damage;
     bullet.kill();
-    store.health--;
 
     // If health depleted, end the game
     if (store.health <= 0) {
       /* Debug */
-      store.health = 5;
+      store.health = store.maxHealth;
+      this.game.state.start('town');
+    }
+  }
+
+  // When an enemy hits us
+  onEnemyCollision(enemy) {
+    store.health = store.health - enemy.damage / 50;
+
+    // If health depleted, end the game
+    if (store.health <= 0) {
+      /* Debug */
+      store.health = store.maxHealth;
       this.game.state.start('town');
     }
   }

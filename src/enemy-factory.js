@@ -1,4 +1,5 @@
-import Enemy from './enemy';
+import Wizard from './enemies/wizard';
+import Knight from './enemies/knight';
 
 export default class EnemyFactory {
   constructor(game, wave) {
@@ -30,8 +31,9 @@ export default class EnemyFactory {
   }
 
   preload() {
-    this.game.load.image('bullet', 'assets/images/bullet.png');
-    this.game.load.image('baddie', 'assets/images/invader.png');
+    this.game.load.image('bullet_2', 'assets/images/bullet_2.png');
+    this.game.load.image('Wizard', 'assets/images/Wizard.png');
+    this.game.load.image('Knight', 'assets/images/Knight.png');
     this.game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
   }
 
@@ -42,7 +44,7 @@ export default class EnemyFactory {
     this.enemyBullets = this.game.add.group();
     this.enemyBullets.enableBody = true;
     this.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
-    this.enemyBullets.createMultiple(100, 'bullet');
+    this.enemyBullets.createMultiple(100, 'bullet_2');
     this.enemyBullets.setAll('anchor.x', 0.5);
     this.enemyBullets.setAll('anchor.y', 0.5);
     this.enemyBullets.setAll('outOfBoundsKill', true);
@@ -61,8 +63,15 @@ export default class EnemyFactory {
 
     // Create enemies
     this.spawn = this.getSpawn(this.wave);
-    for (var i = 0; i < this.spawn.number; i++) {
-      var enemy = new Enemy(i, this.game, this.player, this.enemyBullets, this.spawn.health, this.spawn.damage);
+    // Knights
+    for (var i = 0; i < this.spawn.knight.number; i++) {
+      var enemy = new Knight(i, this.game, this.player, this.spawn.knight.health, this.spawn.knight.damage);
+      this.enemies.push(enemy);
+      this.enemyGroup.add(enemy.getSprite());
+    }
+    // Wizards
+    for (var i = 0; i < this.spawn.wizard.number; i++) {
+      var enemy = new Wizard(i, this.game, this.player, this.enemyBullets, this.spawn.wizard.health, this.spawn.wizard.damage);
       this.enemies.push(enemy);
       this.enemyGroup.add(enemy.getSprite());
     }
@@ -92,16 +101,31 @@ export default class EnemyFactory {
 
   // Calculate spawn characteristics given a wave number
   getSpawn(wave) {
-    var spawn = { number: 0, health: 1, damage: 1 };
+    var spawn = { knight: { number: 0, health: 1, damage: 1 }, wizard: { number: 0, health: 1, damage: 1 } };
 
-    spawn.number = wave;
+    spawn.knight.number = wave;
     if (wave % 5 === 0) {
-      spawn.number *= 1.2;
+      spawn.knight.number *= 1.5;
     }
 
-    spawn.health = wave / 4 + 1;
+    // Wizards show up after 5 waves
+    if (wave > 5) {
+      spawn.wizard.number = wave - 5;
+    }
+    if (wave % 3 === 0) {
+      spawn.wizard.number *= 1.5;
+    }
+    spawn.wizard.number = Math.round(spawn.wizard.number);
+    spawn.knight.number = Math.round(spawn.knight.number);
+    spawn.number = spawn.wizard.number + spawn.knight.number;
 
-    spawn.damage = wave / 3 + 1;
+    spawn.knight.health = wave / 4 + 1;
+    spawn.wizard.health = wave / 7 + 1;
+
+    spawn.knight.damage = wave / 5 + 1;
+    spawn.wizard.damage = wave / 3 + 1;
+
+    console.log(spawn);
 
     return spawn;
   }
