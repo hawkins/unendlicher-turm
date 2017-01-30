@@ -1,6 +1,7 @@
 import Knight from './enemies/knight';
 import Wizard from './enemies/wizard';
 import Archer from './enemies/archer';
+import Guardian from './enemies/guardian';
 
 export default class EnemyFactory {
   constructor(game, wave) {
@@ -38,6 +39,7 @@ export default class EnemyFactory {
     this.game.load.image('Knight', 'assets/images/Knight.png');
     this.game.load.image('Wizard', 'assets/images/Wizard.png');
     this.game.load.image('Archer', 'assets/images/Archer.png');
+    this.game.load.image('Guardian', 'assets/images/Guardian.png');
     this.game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
   }
 
@@ -95,6 +97,12 @@ export default class EnemyFactory {
       this.enemies.push(enemy);
       this.enemyGroup.add(enemy.getSprite());
     }
+    // Guardian
+    for (var i = 0; i < this.spawn.guardian.number; i++) {
+      var enemy = new Guardian(i, this.game, this.player, this.spawn.guardian.health, this.spawn.guardian.damage);
+      this.enemies.push(enemy);
+      this.enemyGroup.add(enemy.getSprite());
+    }
   }
 
   update() {
@@ -124,7 +132,12 @@ export default class EnemyFactory {
 
   // Calculate spawn characteristics given a wave number
   getSpawn(wave) {
-    var spawn = { knight: { number: 0, health: 1, damage: 1 }, wizard: { number: 0, health: 1, damage: 1 }, archer: { number: 0, health: 1, damage: 1 } };
+    var spawn = {
+      knight: { number: 0, health: 1, damage: 1 },
+      wizard: { number: 0, health: 1, damage: 1 },
+      archer: { number: 0, health: 1, damage: 1 },
+      guardian: { number: 0, health: 1, damage: 1 }
+    };
 
     spawn.knight.number = wave;
     if (wave % 5 === 0) {
@@ -147,10 +160,17 @@ export default class EnemyFactory {
       spawn.archer.number *= 1.5;
     }
 
+    // Guardian shows up at wave 20
+    if (wave == 1 || wave == 20) {
+      spawn.guardian.number = 1;
+      spawn.guardian.health = 10 * spawn.knight.health;
+      spawn.guardian.damage = 100;
+    }
+
     spawn.knight.number = Math.round(spawn.knight.number);
     spawn.wizard.number = Math.round(spawn.wizard.number);
     spawn.archer.number = Math.round(spawn.archer.number);
-    spawn.number = spawn.wizard.number + spawn.knight.number;
+    spawn.number = spawn.knight.number + spawn.wizard.number + spawn.archer.number + spawn.guardian.number;
 
     spawn.knight.health = wave / 4 + 1;
     spawn.wizard.health = wave / 7 + 1;
