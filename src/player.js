@@ -3,10 +3,11 @@ import store from './store';
 export default class Player {
   constructor(game) {
     this.game = game;
-    this.firestrike;
-    this.deathmoans;
+    this.firestrike = '';
+    this.deathmoans = '';
     this.fireRate = 300;
     this.nextFire = 0;
+    this.playerPosition;
   }
 
   preload() {
@@ -45,6 +46,8 @@ export default class Player {
   update(cursors) {
     // Look at the mouse
     this.player.rotation = this.game.physics.arcade.angleToPointer(this.player);
+
+    this.playerPosition = new Phaser.Rectangle(this.player.x, this.player.y, this.player.width, this.player.height);
 
     var keyA = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
     var keyW = this.game.input.keyboard.addKey(Phaser.Keyboard.W);

@@ -5,6 +5,10 @@ var layer2;
 var entranceLayer;
 var exitLayer;
 
+// Coins Distribution
+var coinMax = 4;
+var coinMin = 1;
+
 export default {
   unlocked: false,
   preload: game => {
@@ -46,6 +50,7 @@ export default {
       () => {
         if (this.unlocked) {
           store.wave++;
+          store.coins = store.coins + (Math.floor(Math.random() * (coinMax - coinMin)) + coinMin);
           game.state.start('arena');
         }
       },
