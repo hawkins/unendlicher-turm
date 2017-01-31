@@ -4,6 +4,7 @@ import Player from '../player';
 import town from '../maps/town';
 import Fullscreen from '../fullscreen';
 import GUI from '../gui';
+import store from '../store';
 
 // eslint-disable-line import/no-unresolved
 // Controls
@@ -15,12 +16,9 @@ var playerController;
 var player;
 var gui;
 
-// Audio
-var townMusic;
-
 function preload() {
   // Load audio file
-  this.game.load.audio('adventure', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
+  this.game.load.audio('mainBackground', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
 
   playerController = new Player(this.game);
   playerController.preload();
@@ -40,11 +38,13 @@ function create() {
   // Create keys
   cursors = this.game.input.keyboard.createCursorKeys();
 
-  // Create Audio for town
-  townMusic = this.game.add.audio('adventure');
+  if (store.backgroundMusic.name !== 'mainBackground') {
+    // Create Audio for town
+    store.backgroundMusic = this.game.add.audio('mainBackground');
 
-  // Setting volume and loop
-  townMusic.play('', 1, 0.3, true);
+    // Setting volume and loop
+    store.backgroundMusic.play('', 1, 0.3, true);
+  }
 
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -61,6 +61,8 @@ function create() {
 
   // Enable fullscreen
   fullscreenController = new Fullscreen(this.game, 'F');
+
+  console.log('Your in the state: ' + store.nextState);
 }
 
 function update() {
@@ -79,7 +81,9 @@ function render() {
 }
 
 function shutdown() {
-  this.game.sound.stopAll();
+  if (store.nextState !== 'town' && store.nextState !== 'shop') {
+    this.game.sound.stopAll();
+  }
 }
 
 export default { preload, create, update, render, shutdown };

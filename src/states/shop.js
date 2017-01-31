@@ -21,9 +21,6 @@ var gui;
 var powerups;
 var playerPosition;
 
-// Audio
-var shopMusic;
-
 // Click Rates
 var clickRate = 2000;
 var nextClick;
@@ -96,11 +93,13 @@ function create() {
 
   nextClick = this.game.time.now + 1000;
 
-  // Create Audio for shop
-  shopMusic = this.game.add.audio('adventure');
+  if (store.backgroundMusic.name !== 'mainBackground') {
+    // Create Audio for town
+    store.backgroundMusic = this.game.add.audio('mainBackground');
 
-  // Setting volume and loop
-  shopMusic.play('', 1, 0.3, true);
+    // Setting volume and loop
+    store.backgroundMusic.play('', 1, 0.3, true);
+  }
 
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -121,6 +120,8 @@ function create() {
 
   // Enable fullscreen
   fullscreenController = new Fullscreen(this.game, 'F');
+
+  console.log('Your in the state: ' + store.nextState);
 }
 
 function update() {
@@ -156,7 +157,9 @@ function render() {
 }
 
 function shutdown() {
-  this.game.sound.stopAll();
+  if (store.nextState !== 'town') {
+    this.game.sound.stopAll();
+  }
 }
 
 function timer(instance) {
