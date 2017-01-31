@@ -39,7 +39,7 @@ export default class EnemyFactory {
     this.game.load.image('Knight', 'assets/images/Knight.png');
     this.game.load.image('Wizard', 'assets/images/Wizard.png');
     this.game.load.image('Archer', 'assets/images/Archer.png');
-    this.game.load.image('Guardian', 'assets/images/Guardian.png');
+    this.game.load.spritesheet('Guardian', 'assets/images/Guardian.png', 104, 98);
     this.game.load.spritesheet('kaboom', 'assets/images/explosion.png', 64, 64, 23);
   }
 
