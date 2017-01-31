@@ -93,14 +93,16 @@ function update() {
   // Arena map
   arena.update(this.game, [ player, ...enemyController.enemyGroup.children ]);
 
-  this.game.physics.arcade.overlap(enemyController.enemyBullets, player, playerController.onBulletCollision, null, playerController);
+  // Collide projectiles and player
+  this.game.physics.arcade.overlap(enemyController.enemySpells, player, playerController.onBulletCollision, null, playerController);
+  this.game.physics.arcade.overlap(enemyController.enemyArrows, player, playerController.onBulletCollision, null, playerController);
 
   // Update enemies
   enemyController.update();
 
   // If they're clicking or hitting spacebar, fire the weapon
   if (this.game.input.activePointer.isDown || spacebar.isDown) {
-    playerController.fire(); //  Boom!
+    playerController.fire(); // Boom!
   }
 
   // Handle player update
@@ -118,7 +120,7 @@ function update() {
 // Explosion Animation / Destroy enemies
 function bulletHitEnemy(baddie, bullet) {
   bullet.kill();
-  var destroyed = enemyController.enemies[baddie.name].hurt();
+  var destroyed = baddie.controller.hurt();
 
   if (destroyed) {
     var explosionAnimation = enemyController.explosions.getFirstExists(false);

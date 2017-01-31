@@ -1,6 +1,6 @@
-import store from './store';
+import store from '../store';
 
-export default class Enemy {
+export default class Wizard {
   constructor(index, game, player, bullets, health, damage) {
     this.game = game;
     this.player = player;
@@ -8,25 +8,29 @@ export default class Enemy {
     this.health = health;
     this.damage = damage;
 
-    // AI Movement ---
-    // enemey speed toward playerpixels/second
+    // Enemy speed toward player in pixels/second
     this.speed = 125;
-    // turn rate in degrees/frame
+    // Turn rate in degrees/frame
     this.turn_rate = 10;
-    // degrees, how much the emeney moves around when close to player
+    // How much the emeney moves around when close to player
     this.jitter_limit = 200;
-    // milliseconds and how quickly
+    // How quickly they jitter in milliseconds
     this.jitter_speed = 10;
-    //pixels, change this to change when the enemy starts to avoid player
-    this.avoid_distance = 175;
-    // ---------------
+    // Distance to maintain from player in pixels
+    this.avoid_distance = 250;
+
     this.fireRate = 1000;
-    this.nextFire = this.game.time.now + 1000;
+    this.nextFire = this.game.time.now + 900 + 500 * Math.random();
     this.alive = true;
     var startX = (Math.random() * (28 - 1) + 1) / 30 * game.world.width;
     var startY = (Math.random() * (28 - 1) + 1) / 30 * game.world.height;
 
-    this.baddie = this.game.add.sprite(startX, startY, 'baddie');
+    // JavaScript this is strange sometimes
+    var controller = this;
+
+    this.baddie = this.game.add.sprite(startX, startY, 'Wizard');
+    this.baddie.controller = controller;
+
     this.baddie.anchor.set(0.5);
     this.baddie.name = index.toString();
     this.game.physics.enable(this.baddie, Phaser.Physics.ARCADE);
@@ -35,10 +39,9 @@ export default class Enemy {
     this.baddie.body.bounce.setTo(1, 1);
     this.baddie.angle = this.game.rnd.angle();
 
-    this.jitter = this.jitter_limit;
     this.game.add.tween(this).to({ wobble: -this.jitter_limit }, this.jitter_speed, Phaser.Easing.Sinusoidal.InOut, true, 0, Number.POSITIVE_INFINITY, true);
     // increasing this will increase the movement speed of the enemies
-    this.game.physics.arcade.velocityFromRotation(this.baddie.rotation, 90, this.baddie.body.velocity);
+    this.game.physics.arcade.velocityFromRotation(this.baddie.rotation, 90 + index * 1.5, this.baddie.body.velocity);
   }
 
   // Hurts the enemy and returns true if the enemy was killed
@@ -124,6 +127,7 @@ export default class Enemy {
         this.nextFire = this.game.time.now + this.fireRate;
 
         var bullet = this.bullets.getFirstDead();
+        bullet.damage = this.damage;
         bullet.reset(this.baddie.x, this.baddie.y);
         bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
       }
