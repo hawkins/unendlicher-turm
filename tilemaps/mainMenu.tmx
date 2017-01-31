@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="28" height="16" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="DungeonCrawl_ProjectUtumnoTileset" tilewidth="32" tileheight="32" tilecount="3072" columns="64">
-  <image source="../../../Downloads/DungeonCrawl_ProjectUtumnoTileset.png" width="2048" height="1536"/>
+  <image source="../../../Documents/DungeonCrawl_ProjectUtumnoTileset.png" width="2048" height="1536"/>
  </tileset>
  <layer name="Floor" width="28" height="16">
   <data encoding="csv">
@@ -83,7 +83,4 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <imagelayer name="Title" offsetx="164" offsety="10">
-  <image source="../../../Desktop/pixel-speech-bubble.png" width="531" height="180"/>
- </imagelayer>
 </map>

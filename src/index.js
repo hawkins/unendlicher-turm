@@ -1,6 +1,7 @@
 import arenaState from './states/arena';
 import townState from './states/town';
 import shopState from './states/shop';
+import mainMenuState from './states/mainMenu';
 import store from './store';
 
 // Define the game
@@ -10,6 +11,7 @@ var game = new Phaser.Game(896, 512, Phaser.AUTO, 'root');
 game.state.add('arena', arenaState);
 game.state.add('town', townState);
 game.state.add('shop', shopState);
+game.state.add('mainMenu', mainMenuState);
 
 // Start the start state
-game.state.start('shop');
+game.state.start('mainMenu');
