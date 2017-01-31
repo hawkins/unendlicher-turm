@@ -14,24 +14,46 @@
         }, 
         {
          "draworder":"topdown",
-         "height":16,
+         "height":0,
          "name":"Portals",
          "objects":[
                 {
-                 "height":32,
+                 "height":42,
                  "id":11,
                  "name":"healthPortal",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":32,
-                 "x":320,
+                 "width":68,
+                 "x":301,
+                 "y":32
+                }, 
+                {
+                 "height":42,
+                 "id":13,
+                 "name":"strengthPortal",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":68,
+                 "x":431,
+                 "y":32
+                }, 
+                {
+                 "height":42,
+                 "id":14,
+                 "name":"speedPortal",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":68,
+                 "x":557,
                  "y":32
                 }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":28,
+         "width":0,
          "x":0,
          "y":0
         }, 
@@ -83,7 +105,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":13,
+ "nextobjectid":15,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":32,
@@ -91,7 +113,7 @@
         {
          "columns":64,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/..\/Documents\/DungeonCrawl_ProjectUtumnoTileset.png",
+         "image":"..\/..\/..\/..\/..\/Downloads\/DungeonCrawl_ProjectUtumnoTileset.png",
          "imageheight":1536,
          "imagewidth":2048,
          "margin":0,
