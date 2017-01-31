@@ -14,4 +14,4 @@ game.state.add('shop', shopState);
 game.state.add('mainMenu', mainMenuState);
 
 // Start the start state
-game.state.start('shop');
+game.state.start('mainMenu');
