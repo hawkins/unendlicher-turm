@@ -61,8 +61,6 @@ function create() {
 
   // Enable fullscreen
   fullscreenController = new Fullscreen(this.game, 'F');
-
-  console.log('Your in the state: ' + store.nextState);
 }
 
 function update() {
