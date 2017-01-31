@@ -161,7 +161,7 @@ export default class EnemyFactory {
     }
 
     // Guardian shows up at wave 20
-    if (wave == 1 || wave == 20) {
+    if (wave >= 20) {
       spawn.guardian.number = 1;
       spawn.guardian.health = 10 * spawn.knight.health;
       spawn.guardian.damage = 100;
