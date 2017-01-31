@@ -11,28 +11,6 @@ var shelfItems;
 var items;
 var portals;
 
-// Create Variables for Object Layers
-var healthPortal;
-var strengthPortal;
-var speedPortal;
-
-// Create Variables for Portal Tile Position
-var healthStone;
-var strengthStone;
-var speedStone;
-
-// Create Variable for Object Layer
-var height;
-var name;
-var properties;
-var rectangle;
-var rotation;
-var type;
-var visible;
-var width;
-var x;
-var y;
-
 export default {
   preload: game => {
     // Load tilemap
@@ -58,12 +36,6 @@ export default {
     // Resize game world to match the floor
     floor.resizeWorld();
 
-    // Create object layer
-    healthPortal = map.objects.Portals[0];
-
-    // Assign Portal Position
-    healthStone = new Phaser.Rectangle(healthPortal.x, healthPortal.y, healthPortal.width, healthPortal.height);
-
     // Collide with player
     map.setCollisionBetween(1, 10000, true, walls);
     map.setCollisionBetween(1, 10000, true, items);
@@ -75,22 +47,6 @@ export default {
 
     // Enter arena when player collides with exit layer
     map.setTileLocationCallback(27, 7, 1, 1, () => game.state.start('arena'), this, doors);
-    // Purchase health powerups with player collides with exit layer
-    // map.setTileLocationCallback(
-    //   10,
-    //   1,
-    //   1,
-    //   1,
-    //   () => {
-    //     if (spacebar.isDown) {
-    //       console.log(store.maxHealth);
-    //       powerUps.healthzone();
-    //       console.log(store.maxHealth);
-    //     }
-    //   },
-    //   this,
-    //   doors
-    // );
   },
   update: (game, collidables) => {
     collidables.forEach(item => {
@@ -100,9 +56,5 @@ export default {
       game.physics.arcade.collide(item, shelfItems);
       game.physics.arcade.collide(item, doors);
     });
-  },
-  healthzone: game => {
-    // Assign Portal Position
-    healthStone = new Phaser.Rectangle(healthPortal.x, healthPortal.y, healthPortal.width, healthPortal.height);
   }
 };

@@ -10,10 +10,7 @@ import powerUps from '../powerups';
 // eslint-disable-line import/no-unresolved
 // Controls
 var cursors;
-var spacebar;
-var bKey;
-var hKey;
-var zKey;
+var enter;
 
 // Controllers
 var fullscreenController;
@@ -22,6 +19,7 @@ var player;
 var shopActions;
 var gui;
 var powerups;
+var playerPosition;
 
 // Audio
 var shopMusic;
@@ -30,7 +28,36 @@ var shopMusic;
 var clickRate = 2000;
 var nextClick;
 
+// MAP
+// Create Variables for Object Layers
+var healthPortal;
+var strengthPortal;
+var speedPortal;
+
+// Create Variables for Portal Tile Position
+var healthStone;
+var strengthStone;
+var speedStone;
+
+// Create Variable for Object Layer
+var height;
+var name;
+var properties;
+var rectangle;
+var rotation;
+var type;
+var visible;
+var width;
+var x;
+var y;
+
 function preload() {
+  // Load tilemap
+  this.game.load.tilemap('shop', 'assets/maps/shop.json', null, Phaser.Tilemap.TILED_JSON);
+
+  // Load tiles image
+  this.game.load.image('tiles', 'assets/images/tiles.png');
+
   // Load audio file
   this.game.load.audio('adventure', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
 
@@ -43,6 +70,20 @@ function create() {
   // Enable the Arcade Physics system
   this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
+  // Create the map
+  var map = this.game.add.tilemap('shop');
+  map.addTilesetImage('DungeonCrawl_ProjectUtumnoTileset', 'tiles');
+
+  // TODO: Determine why only one Portals can exist
+  // Create object layer
+  // healthPortal = map.objects.Portals[0];
+  // strengthPortal = map.obects.Portals[1];
+  // speedPortal = map.objects.Portals[2];
+  // Assign Portal Position (x, y , width, height)
+  healthStone = new Phaser.Rectangle(301, 32, 68, 42);
+  strengthStone = new Phaser.Rectangle(431, 32, 68, 42);
+  speedStone = new Phaser.Rectangle(557, 32, 68, 42);
+
   // Create the map(s)
   shop.create(this.game);
 
@@ -51,12 +92,7 @@ function create() {
 
   // Create keys
   cursors = this.game.input.keyboard.createCursorKeys();
-  spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-  // Purchase Keys
-  bKey = this.game.input.keyboard.addKey(Phaser.Keyboard.B);
-  hKey = this.game.input.keyboard.addKey(Phaser.Keyboard.H);
-  zKey = this.game.input.keyboard.addKey(Phaser.Keyboard.Z);
+  enter = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
   nextClick = this.game.time.now + 1000;
 
@@ -85,8 +121,6 @@ function create() {
 
   // Enable fullscreen
   fullscreenController = new Fullscreen(this.game, 'F');
-
-  console.log(player);
 }
 
 function update() {
@@ -100,33 +134,19 @@ function update() {
   playerController.update(cursors);
 
   // Update Player Position
-  // playerPosition = new Phaser.Rectangle(player.x, player.y, player.width, player.height);
-  if (hKey.isDown) {
+  playerPosition = new Phaser.Rectangle(player.x, player.y, player.width, player.height);
+
+  if (enter.isDown && healthStone.contains(playerPosition.x, playerPosition.y)) {
     if (timer(this.game)) {
-      console.log('Heal you wish!');
-      console.log('Current Max: ' + store.maxHealth);
-      console.log('Current Coins: ' + store.coins);
       powerups.healthZone();
-      console.log('New Max: ' + store.maxHealth);
-      console.log('New Coins: ' + store.coins);
     }
-  } else if (bKey.isDown) {
+  } else if (enter.isDown && strengthStone.contains(playerPosition.x, playerPosition.y)) {
     if (timer(this.game)) {
-      console.log('Bulk up!');
-      console.log('Current Max: ' + store.damage);
-      console.log('Current Coins: ' + store.coins);
       powerups.damageZone();
-      console.log('New Max: ' + store.damage);
-      console.log('New Coins: ' + store.coins);
     }
-  } else if (zKey.isDown) {
+  } else if (enter.isDown && speedStone.contains(playerPosition.x, playerPosition.y)) {
     if (timer(this.game)) {
-      console.log('Zoom Zoom!');
-      console.log('Current Max: ' + store.speed);
-      console.log('Current Coins: ' + store.coins);
       powerups.speedZone();
-      console.log('New Max: ' + store.speed);
-      console.log('New Coins: ' + store.coins);
     }
   }
 }
