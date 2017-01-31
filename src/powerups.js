@@ -24,6 +24,7 @@ export default class powerUps {
     if (store.coins >= store.healthCost) {
       store.coins = store.coins - store.healthCost;
       store.maxHealth += 5;
+      store.healthCost++;
       store.health = store.maxHealth;
     } else {
       console.log("You're out of money!");
@@ -33,6 +34,7 @@ export default class powerUps {
   damageZone() {
     if (store.coins >= store.damageCost) {
       store.coins = store.coins - store.damageCost;
+      store.damageCost++;
       store.damage += 2;
     } else {
       console.log("You're out of money!");
@@ -42,6 +44,7 @@ export default class powerUps {
   speedZone() {
     if (store.coins >= store.speedCost) {
       store.coins = store.coins - store.speedCost;
+      store.speedCost++;
       store.speed += 10;
     } else {
       console.log("You're out of money!");
