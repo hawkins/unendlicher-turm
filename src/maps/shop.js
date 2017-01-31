@@ -43,10 +43,32 @@ export default {
     map.setCollisionBetween(1, 10000, true, doors);
 
     // Enter town when player collides with exit layer
-    map.setTileLocationCallback(0, 7, 1, 1, () => game.state.start('town'), this, doors);
+    map.setTileLocationCallback(
+      0,
+      7,
+      1,
+      1,
+      () => {
+        store.nextState = 'town';
+        game.state.start('town');
+      },
+      this,
+      doors
+    );
 
     // Enter arena when player collides with exit layer
-    map.setTileLocationCallback(27, 7, 1, 1, () => game.state.start('arena'), this, doors);
+    map.setTileLocationCallback(
+      27,
+      7,
+      1,
+      1,
+      () => {
+        store.nextState = 'arena';
+        game.state.start('arena');
+      },
+      this,
+      doors
+    );
   },
   update: (game, collidables) => {
     collidables.forEach(item => {

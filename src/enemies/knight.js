@@ -48,8 +48,6 @@ export default class Knight {
       this.alive = false;
       this.baddie.kill();
 
-      store.coins++;
-
       return true;
     }
 

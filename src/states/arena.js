@@ -19,7 +19,6 @@ var player;
 var gui;
 
 // Audio
-var battleMusic;
 var baddieDeath;
 
 function preload() {
@@ -32,7 +31,8 @@ function preload() {
   playerController.preload();
   arena.preload(this.game);
 
-  this.game.load.audio('madGod', [ 'assets/audio/SoundEffects/madGod.ogg' ]);
+  // Load Audio File
+  this.game.load.audio('arenaBackground', [ 'assets/audio/SoundEffects/madGod.ogg' ]);
   this.game.load.audio('baddieDeath', [ 'assets/audio/SoundEffects/baddieDeath.ogg' ]);
 }
 
@@ -59,11 +59,13 @@ function create() {
   // Create sounds
   baddieDeath = this.game.add.audio('baddieDeath');
 
-  // Create audio for arena
-  battleMusic = this.game.add.audio('madGod');
+  if (store.backgroundMusic.name !== 'arenaBackground') {
+    // Create Audio for town
+    store.backgroundMusic = this.game.add.audio('arenaBackground');
 
-  // Setting volume and loop
-  battleMusic.play('', 1, 0.3, true);
+    // Setting volume and loop
+    store.backgroundMusic.play('', 1, 0.3, true);
+  }
 
   // This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -87,6 +89,8 @@ function create() {
 
   // Enable fullscreen
   fullscreenController = new Fullscreen(this.game, 'F');
+
+  console.log('Your in the state: ' + store.nextState);
 }
 
 function update() {
@@ -130,7 +134,9 @@ function bulletHitEnemy(baddie, bullet) {
 }
 
 function shutdown() {
-  this.game.sound.stopAll();
+  if (store.nextState !== 'arena') {
+    this.game.sound.stopAll();
+  }
 }
 
 function render() {

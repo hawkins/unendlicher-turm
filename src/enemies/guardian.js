@@ -47,8 +47,6 @@ export default class Guardian {
       this.alive = false;
       this.baddie.kill();
 
-      store.coins++;
-
       return true;
     }
 

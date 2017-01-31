@@ -53,8 +53,6 @@ export default class Archer {
       this.alive = false;
       this.baddie.kill();
 
-      store.coins++;
-
       return true;
     }
 

@@ -2,6 +2,7 @@
 import css from '../index.css';
 import mainMenu from '../maps/mainMenu';
 import Fullscreen from '../fullscreen';
+import store from '../store';
 
 // Controls
 var enter;
@@ -43,6 +44,9 @@ function preload() {
 
   // Load Knight Player image file
   this.game.load.image('TJ', 'assets/images/TJ_topdown.png');
+
+  // Load audio file
+  this.game.load.audio('mainBackground', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
 
   mainMenu.preload(this.game);
 }
@@ -87,7 +91,12 @@ function create() {
   reg.modal = new gameModal(this.game);
   createModals();
 
-  // Set
+  // Create Audio for town
+  store.backgroundMusic = this.game.add.audio('mainBackground');
+
+  // Setting volume and loop
+  store.backgroundMusic.play('', 1, 0.3, true);
+
   // Enable fullscreen
   fullscreenController = new Fullscreen(this.game, 'F');
 }
