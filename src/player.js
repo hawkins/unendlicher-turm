@@ -52,8 +52,6 @@ export default class Player {
 
   update(cursors) {
     // Look at the mouse
-    this.player.rotation = this.game.physics.arcade.angleToPointer(this.player);
-
     this.playerPosition = new Phaser.Rectangle(this.player.x, this.player.y, this.player.width, this.player.height);
 
     var keyA = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -63,24 +61,46 @@ export default class Player {
 
     // Horizontal motion
     if (cursors.left.isDown || keyA.isDown) {
-      //  Move to the left
-      this.player.body.velocity.x = -store.speed;
+      if (cursors.up.isDown || keyW.isDown || cursors.down.isDOwn || keyS.isDown) {
+        this.player.body.velocity.x = (-store.speed) / Math.sqrt(2);
+      } else {
+        this.player.body.velocity.x = -store.speed;
+      }
       this.player.angle = 180;
     } else if (cursors.right.isDown || keyD.isDown) {
-      //  Move to the right
-      this.player.body.velocity.x = store.speed;
+      if (cursors.up.isDown || keyW.isDown || cursors.down.isDOwn || keyS.isDown) {
+        this.player.body.velocity.x = store.speed / Math.sqrt(2);
+      } else {
+        this.player.body.velocity.x = store.speed;
+      }
       this.player.angle = 0;
     }
 
     // Vertical motion
     if (cursors.up.isDown || keyW.isDown) {
-      // Move up
-      this.player.body.velocity.y = -store.speed;
-      this.player.angle = 270;
+      // Are we also moving sideways?
+      if (cursors.left.isDown || keyA.isDown) {
+        this.player.body.velocity.y = (-store.speed) / Math.sqrt(2);
+        this.player.angle = 225;
+      } else if (cursors.right.isDown || keyD.isDown) {
+        this.player.body.velocity.y = (-store.speed) / Math.sqrt(2);
+        this.player.angle = 315;
+      } else {
+        this.player.body.velocity.y = -store.speed;
+        this.player.angle = 270;
+      }
     } else if (cursors.down.isDown || keyS.isDown) {
-      // Move down
-      this.player.body.velocity.y = store.speed;
-      this.player.angle = 90;
+      // Are we also moving sideways?
+      if (cursors.left.isDown || keyA.isDown) {
+        this.player.body.velocity.y = store.speed / Math.sqrt(2);
+        this.player.angle = 135;
+      } else if (cursors.right.isDown || keyD.isDown) {
+        this.player.body.velocity.y = store.speed / Math.sqrt(2);
+        this.player.angle = 45;
+      } else {
+        this.player.body.velocity.y = store.speed;
+        this.player.angle = 90;
+      }
     }
 
     // Stop motion
@@ -97,10 +117,20 @@ export default class Player {
     if (this.game.time.now > this.nextFire) {
       // Then create the bullet
       var bullet = this.bullets.getFirstExists(false);
+      var spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-      bullet.reset(this.player.x, this.player.y);
-
-      bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 500, this.game.input.activePointer);
+      if (spacebar.isDown) {
+        var bulletOffset = 20 * Math.sin(this.game.math.degToRad(this.player.angle));
+        bullet.reset(this.player.x + bulletOffset, this.player.y);
+        bullet.angle = this.player.angle;
+        this.game.physics.arcade.velocityFromAngle(bullet.angle, 500, bullet.body.velocity);
+        bullet.body.velocity.x += this.player.body.velocity.x;
+      } else if (this.game.input.activePointer) {
+        this.player.rotation = this.game.physics.arcade.angleToPointer(this.player);
+        console.log('Active Pointer');
+        bullet.reset(this.player.x, this.player.y);
+        bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 500, this.game.input.activePointer);
+      }
       // Delay next bullet fire opportunity
       this.nextFire = this.game.time.now + this.fireRate;
 
