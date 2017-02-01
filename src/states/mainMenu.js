@@ -127,16 +127,16 @@ function createModals() {
       {
         type: 'text',
         align: 'center',
-        content: 'How to Play\n\n Welcome to Unendlicher Turm! \n\n\
+        content: "How to Play\n\n Welcome to Unendlicher Turm! \n\n\
         Basic Actions\n\
-        Use the W, A, S, D (and arrow) keys to move your player around the map.\n\
+        Use the W, A, S, D (or arrow) keys to move your player around the map.\n\
         Press the F key to toggle Fullscreen.\n\n\
         Arena Actions\n\
         Use the space bar or right-click the mouse to fire.\nUsing the mouse will increase your accuracy.\n\n\
         Shop Actions\n\
-        Purchase health by pressing the H key, damage by\n\
-        pressing the B key, and speed by pressing the Z key.\
-        ',
+        Purchase health, damage, or speed by standing on\n\
+        it's respective portal and pressing the Enter key.\
+        ",
         fontFamily: 'Luckiest Guy',
         fontSize: 18,
         color: '0xFFFFFF',
