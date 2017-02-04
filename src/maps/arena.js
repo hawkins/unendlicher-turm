@@ -1,5 +1,7 @@
 import store from '../store';
 
+var state = {};
+
 var layer;
 var layer2;
 var entranceLayer;
@@ -20,7 +22,7 @@ export default {
   },
   create: game => {
     // In case this is not our first map, reset the map
-    this.unlocked = false;
+    state.unlocked = false;
 
     // Create the map
     var map = game.add.tilemap('arena');
@@ -48,7 +50,7 @@ export default {
         store.nextState = 'town';
         game.state.start('town');
       },
-      this,
+      state,
       exitLayer
     );
 
@@ -59,14 +61,14 @@ export default {
       1,
       2,
       () => {
-        if (this.unlocked) {
+        if (state.unlocked) {
           store.wave++;
           store.coins = store.coins + (Math.floor(Math.random() * (coinMax - coinMin)) + coinMin);
           store.nextState = 'arena';
           game.state.start('arena');
         }
       },
-      this,
+      state,
       entranceLayer
     );
   },
@@ -80,6 +82,6 @@ export default {
   },
   // This function allows
   unlock: () => {
-    this.unlocked = true;
+    state.unlocked = true;
   }
 };
