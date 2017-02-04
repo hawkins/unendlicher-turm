@@ -5,8 +5,8 @@ import town from '../maps/town';
 import Fullscreen from '../fullscreen';
 import GUI from '../gui';
 import store from '../store';
+import Wolfgrave from '../wolfgrave';
 
-// eslint-disable-line import/no-unresolved
 // Controls
 var cursors;
 
@@ -15,6 +15,7 @@ var fullscreenController;
 var playerController;
 var player;
 var gui;
+var wolfgrave;
 
 function preload() {
   // Load audio file
@@ -22,6 +23,10 @@ function preload() {
 
   playerController = new Player(this.game);
   playerController.preload();
+
+  wolfgrave = new Wolfgrave(this.game);
+  wolfgrave.preload();
+
   town.preload(this.game);
 }
 
@@ -46,9 +51,11 @@ function create() {
     store.backgroundMusic.play('', 1, 0.3, true);
   }
 
-  //  This will force player to decelerate and limit its speed
+  //  This will force player to decelerate
   player.body.drag.set(550);
-  player.body.maxVelocity.setTo(200, 200);
+
+  // Create NPC
+  wolfgrave.create();
 
   // Create the GUI
   gui = new GUI(this.game);
@@ -64,8 +71,11 @@ function create() {
 }
 
 function update() {
-  // Arena map
+  // Map
   town.update(this.game, [ player ]);
+
+  // NPC
+  wolfgrave.update(player);
 
   // Update the gui
   gui.update();
