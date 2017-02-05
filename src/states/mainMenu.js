@@ -160,9 +160,10 @@ Our Story\n
 Many travelers are drawn to the City of Zherith.
 Some have come to worship the tower and believe that it has the power to heal.
 The people of the lands surrounding the tower have declared it sacred and it is
-a crime punishable by death to desecrate it. When Wolfgrave first arrives in town
-he begins asking people about the tower. The locals speak of warriors that come
-to conquer the tower, but while many have entered, none have ever returned.\n
+a crime punishable by death to desecrate it. When Wolfgrave and his trusty partner
+Urgnot first arrived in town, he began asking people about the tower. The locals
+spoke of warriors that come to conquer the tower, but while many have entered,
+none have ever returned.\n
 Click here to continue story`,
         fontFamily: 'Luckiest Guy',
         fontSize: 20,
