@@ -64,8 +64,8 @@ export default {
         if (state.unlocked) {
           store.wave++;
           store.coins = store.coins + (Math.floor(Math.random() * (coinMax - coinMin)) + coinMin);
-          store.nextState = 'arena';
-          game.state.start('arena');
+          store.nextState = 'loading';
+          game.state.start('loading');
         }
       },
       state,

@@ -2,6 +2,7 @@ import arenaState from './states/arena';
 import townState from './states/town';
 import shopState from './states/shop';
 import mainMenuState from './states/mainMenu';
+import loadingState from './states/loading';
 import store from './store';
 
 // Define the game
@@ -12,6 +13,7 @@ game.state.add('arena', arenaState);
 game.state.add('town', townState);
 game.state.add('shop', shopState);
 game.state.add('mainMenu', mainMenuState);
+game.state.add('loading', loadingState);
 
 // Start the start state
 game.state.start('mainMenu');

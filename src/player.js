@@ -1,33 +1,27 @@
 import store from './store';
 
 export default class Player {
-  constructor(game, x, y) {
+  constructor(game) {
     this.game = game;
-    this.spawn = { x, y };
-
     this.firestrike = '';
     this.deathmoans = '';
     this.fireRate = 300;
     this.nextFire = 0;
     this.hurtRate = 1500;
     this.nextHurt = this.game.time.now + 1500;
+    this.playerPosition;
   }
 
   preload() {
-    // Image assets
     this.game.load.image('bullet', 'assets/images/bullet.png');
     this.game.load.image('TJ', 'assets/images/TJ_topdown.png');
-
-    // Audio assets
+    // Audio Files
     this.game.load.audio('firestrike', [ 'assets/audio/SoundEffects/firestrike.ogg' ]);
+    this.game.load.audio('ugh', [ 'assets/audio/SoundEffects/ugh.ogg' ]);
   }
 
   create() {
-    if (this.spawn.x && this.spawn.y) {
-      this.player = this.game.add.sprite(this.spawn.x * 32 - 16, this.spawn.y * 32 - 16, 'TJ');
-    } else {
-      this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'TJ');
-    }
+    this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'TJ');
 
     // JavaScript this is strange sometimes
     var controller = this;
@@ -43,6 +37,7 @@ export default class Player {
 
     // Now create audio for player
     this.firestrike = this.game.add.audio('firestrike');
+    this.ugh = this.game.add.audio('ugh');
 
     // Now create bullets group
     this.bullets = this.game.add.group();
@@ -159,6 +154,8 @@ export default class Player {
     // Hurt the player
     store.health -= bullet.damage;
     bullet.kill();
+
+    this.ugh.play('', 0, 0.3, false);
 
     // If health depleted, end the game
     if (store.health <= 0) {

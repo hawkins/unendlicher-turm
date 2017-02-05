@@ -23,7 +23,7 @@ var baddieDeath;
 
 function preload() {
   // Create controllers now that game exists
-  playerController = new Player(this.game, 4, 16);
+  playerController = new Player(this.game);
   enemyController = new EnemyFactory(this.game, store.wave);
 
   // Now call actual preload methods
@@ -62,10 +62,9 @@ function create() {
   if (store.backgroundMusic.name !== 'arenaBackground') {
     // Create Audio for town
     store.backgroundMusic = this.game.add.audio('arenaBackground');
-
-    // Setting volume and loop
-    store.backgroundMusic.play('', 1, 0.3, true);
   }
+  // Setting volume and loop
+  store.backgroundMusic.play('', 1, 0.3, true);
 
   // This will force player to decelerate and limit its speed
   player.body.drag.set(550);
@@ -128,6 +127,7 @@ function bulletHitEnemy(baddie, bullet) {
     var explosionAnimation = enemyController.explosions.getFirstExists(false);
     explosionAnimation.reset(baddie.x, baddie.y);
     explosionAnimation.play('kaboom', 30, false, true);
+    baddieDeath.play('', 0, 0.2, false);
   }
 }
 
