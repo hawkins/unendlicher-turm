@@ -3,7 +3,7 @@ export default class Wolfgrave {
     this.game = game;
 
     this.spawn = { x: 208, y: 432 };
-    this.quoteTime = this.game.time.now + 2000;
+    this.quoteTime = this.game.time.now + 4000;
   }
 
   preload() {
@@ -14,6 +14,9 @@ export default class Wolfgrave {
   create() {
     // Create NPC
     this.npc = this.game.add.sprite(this.spawn.x, this.spawn.y, 'wolfgrave');
+    this.game.physics.arcade.enable(this.npc);
+    this.npc.body.immovable = true;
+    this.npc.body.moves = false;
     this.npc.anchor.set(0.5);
   }
 
@@ -21,14 +24,17 @@ export default class Wolfgrave {
     // Look at player
     this.npc.rotation = this.game.math.angleBetween(this.npc.x, this.npc.y, player.x, player.y);
 
+    // Collide with player
+    this.game.physics.arcade.collide(player, this.npc, null);
+
     // Toggle quote
     if (this.game.time.now > this.quoteTime) {
       if (this.quote && this.quote.alive) {
         this.destroyQuote();
-        this.quoteTime = this.game.time.now + 2000;
+        this.quoteTime = this.game.time.now + 20000;
       } else if (!this.quote || !this.quote.alive) {
         this.createQuote();
-        this.quoteTime = this.game.time.now + 10000;
+        this.quoteTime = this.game.time.now + 4000;
       }
     }
   }
