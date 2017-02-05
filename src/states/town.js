@@ -20,7 +20,7 @@ function preload() {
   // Load audio file
   this.game.load.audio('mainBackground', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
 
-  playerController = new Player(this.game, 3, 15);
+  playerController = new Player(this.game, 4, 15);
   playerController.preload();
   town.preload(this.game);
 }
