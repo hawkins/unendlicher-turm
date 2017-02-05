@@ -58,7 +58,7 @@ function preload() {
   // Load audio file
   this.game.load.audio('adventure', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
 
-  playerController = new Player(this.game);
+  playerController = new Player(this.game, 3, 8);
   playerController.preload();
   shop.preload(this.game);
 }
