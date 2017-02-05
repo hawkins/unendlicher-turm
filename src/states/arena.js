@@ -23,7 +23,7 @@ var baddieDeath;
 
 function preload() {
   // Create controllers now that game exists
-  playerController = new Player(this.game);
+  playerController = new Player(this.game, 4, 16);
   enemyController = new EnemyFactory(this.game, store.wave);
 
   // Now call actual preload methods

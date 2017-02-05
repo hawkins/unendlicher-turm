@@ -1,26 +1,33 @@
 import store from './store';
 
 export default class Player {
-  constructor(game) {
+  constructor(game, x, y) {
     this.game = game;
+    this.spawn = { x, y };
+
     this.firestrike = '';
     this.deathmoans = '';
     this.fireRate = 300;
     this.nextFire = 0;
     this.hurtRate = 1500;
     this.nextHurt = this.game.time.now + 1500;
-    this.playerPosition;
   }
 
   preload() {
+    // Image assets
     this.game.load.image('bullet', 'assets/images/bullet.png');
     this.game.load.image('TJ', 'assets/images/TJ_topdown.png');
-    // Audio Files
+
+    // Audio assets
     this.game.load.audio('firestrike', [ 'assets/audio/SoundEffects/firestrike.ogg' ]);
   }
 
   create() {
-    this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'TJ');
+    if (this.spawn.x && this.spawn.y) {
+      this.player = this.game.add.sprite(this.spawn.x * 32 - 16, this.spawn.y * 32 - 16, 'TJ');
+    } else {
+      this.player = this.game.add.sprite(96, this.game.world.height / 2 - 16, 'TJ');
+    }
 
     // JavaScript this is strange sometimes
     var controller = this;
