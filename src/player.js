@@ -35,10 +35,10 @@ export default class Player {
 
     this.player.anchor.setTo(0.5, 0.5);
 
-    //  We need to enable physics on the player
+    // We need to enable physics on the player
     this.game.physics.arcade.enable(this.player);
 
-    //  Player physics properties
+    // Player physics properties
     this.player.body.collideWorldBounds = true;
 
     // Now create audio for player
