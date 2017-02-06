@@ -223,7 +223,7 @@ Click here to continue story`,
 The Guardians of the Tower\n
 Many guardians exist inside the tower. Legend states that the beasts grow
 stronger each floor of the tower, but no one dares speak of the prophecy
-of the Unendlicher Turm. The prophecy states that amulet was hidden amongst
+of the Unendlicher Turm. The prophecy states an amulet was hidden amongst
 the souls of the guardians, and that there is no real way to release it.
 This frightens the magicians of the modern era, because the prophecy
 continues to say that the secret magic will instead be discovered in the one
