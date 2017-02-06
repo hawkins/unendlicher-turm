@@ -127,16 +127,16 @@ function createModals() {
       {
         type: 'text',
         align: 'center',
-        content: "How to Play\n\n Welcome to Unendlicher Turm! \n\n\
-        Basic Actions\n\
-        Use the W, A, S, D (or arrow) keys to move your player around the map.\n\
-        Press the F key to toggle Fullscreen.\n\n\
-        Arena Actions\n\
-        Use the space bar or right-click the mouse to fire.\nUsing the mouse will increase your accuracy.\n\n\
-        Shop Actions\n\
-        Purchase health, damage, or speed by standing on\n\
-        it's respective portal and pressing the Enter key.\
-        ",
+        content: `
+How to Play\n
+Welcome to Unendlicher Turm!\n
+Basic Actions
+Use the W, A, S, D (or arrow) keys to move your player around the map.
+Press the F key to toggle Fullscreen.\n
+Arena Actions
+Use the space bar or left-click the mouse to fire.\nUsing the mouse will increase your accuracy.\n
+Shop Actions
+Purchase health, damage, or speed by standing on it's respective rune and pressing the Enter key.`,
         fontFamily: 'Luckiest Guy',
         fontSize: 18,
         color: '0xFFFFFF',
@@ -155,13 +155,16 @@ function createModals() {
     itemsArr: [
       {
         type: 'text',
-        content: 'Our Story\n\n Many travelers are drawn to the City of Zherith. \n\
-        Some have come to worship the tower and believe that it has the power to heal. \n\
-        The people of the lands surrounding the tower have declared it sacred and it is \n\
-        a crime punishable by death to desecrate it. When GrayWolf first arrives in town \n\
-        he begins asking people about the tower. The locals speak of warriors that come \n\
-        to conquer the tower but where many have entered none have returned. \n\n\
-        Click to Continue Story',
+        content: `
+Our Story\n
+Many travelers are drawn to the City of Zherith.
+Some have come to worship the tower and believe that it has the power to heal.
+The people of the lands surrounding the tower have declared it sacred and it is
+a crime punishable by death to desecrate it. When Wolfgrave and his trusty partner
+Urgnot first arrived in town, he began asking people about the tower. The locals
+spoke of warriors that come to conquer the tower, but while many have entered,
+none have ever returned.\n
+Click here to continue story`,
         fontFamily: 'Luckiest Guy',
         fontSize: 20,
         color: '0xFFFFFF',
@@ -183,17 +186,18 @@ function createModals() {
     itemsArr: [
       {
         type: 'text',
-        content: 'History of the Tower\n\
-        Centuries ago there was a great war between the Elders of Magic that brought great \n\
-        darkness and despair for nearly 200 years. As the Elders of Magic fought for power \n\
-        over the lands many died and entire civilizations were destroyed. In an effort to \n\
-        save what was left a small group of Elders decided to enchant an amulet to absorb \n\
-        the power of the warring Elders. They believed that magic should be used for the \n\
-        benefit of all mankind so they created the endless tower and placed the guardians \n\
-        to protect the amulet. Anyone who wished to harness this power could enter and face \n\
-        the trials and prove themselves worthy. This ended the 200 year long war and peace \n\
-        began to be restored.\n\n\
-        Click to Continue Story',
+        content: `
+History of the Tower\n
+Centuries ago there was a great war between the Elders of Magic that brought great
+darkness and despair for nearly 200 years. As the Elders of Magic fought for power
+over the lands, many died and entire civilizations were destroyed. In an effort to
+save what was left, a small group of Elders decided to enchant an amulet to absorb
+the power of the warring Elders. They believed that magic should be used for the
+benefit of all mankind, so they created the endless tower and placed the guardians
+to protect the amulet. Anyone who wished to harness this power could enter and face
+the trials to prove themselves worthy. This ended the 200 year long war and peace
+began to be return to the lands.\n
+Click here to continue story`,
         fontFamily: 'Luckiest Guy',
         fontSize: 20,
         color: '0xFFFFFF',
@@ -215,8 +219,17 @@ function createModals() {
     itemsArr: [
       {
         type: 'text',
-        content: 'The Guardians of the Tower\n\
-        [ This would be the boss that we fight at the end. Still Thinking…. ]',
+        content: `
+The Guardians of the Tower\n
+Many guardians exist inside the tower. Legend states that the beasts grow
+stronger each floor of the tower, but no one dares speak of the prophecy
+of the Unendlicher Turm. The prophecy states an amulet was hidden amongst
+the souls of the guardians, and that there is no real way to release it.
+This frightens the magicians of the modern era, because the prophecy
+continues to say that the secret magic will instead be discovered in the one
+who can best the Final Guardian, Hurk. Thus the ancient magic has already
+been granted to a chosen one - but are you that chosen one?\n
+Click to close story`,
         fontFamily: 'Luckiest Guy',
         fontSize: 20,
         color: '0xFFFFFF',
