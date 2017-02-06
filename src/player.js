@@ -179,8 +179,7 @@ export default class Player {
 
   onDeath() {
     /* Debug */
-    store.health = store.maxHealth;
     this.game.sound.stopAll();
-    this.game.state.start('town');
+    this.game.state.start('deathMenu');
   }
 }
