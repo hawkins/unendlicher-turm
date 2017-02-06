@@ -126,9 +126,11 @@ export default class Archer {
         this.nextFire = this.game.time.now + this.fireRate;
 
         var bullet = this.bullets.getFirstDead();
-        bullet.damage = this.damage;
-        bullet.reset(this.baddie.x, this.baddie.y);
-        bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
+        if (bullet) {
+          bullet.damage = this.damage;
+          bullet.reset(this.baddie.x, this.baddie.y);
+          bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
+        }
       }
     }
   }

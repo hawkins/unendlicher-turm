@@ -135,10 +135,10 @@ export default class Player {
         bullet.body.velocity.x += this.player.body.velocity.x;
       } else if (this.game.input.activePointer) {
         this.player.rotation = this.game.physics.arcade.angleToPointer(this.player);
-        console.log('Active Pointer');
         bullet.reset(this.player.x, this.player.y);
         bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 500, this.game.input.activePointer);
       }
+
       // Delay next bullet fire opportunity
       this.nextFire = this.game.time.now + store.fireRate;
 
