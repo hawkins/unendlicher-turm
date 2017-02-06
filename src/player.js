@@ -7,7 +7,6 @@ export default class Player {
 
     this.firestrike = '';
     this.deathmoans = '';
-    this.fireRate = 300;
     this.nextFire = 0;
     this.hurtRate = 1500;
     this.nextHurt = this.game.time.now + 1500;
@@ -20,6 +19,7 @@ export default class Player {
 
     // Audio assets
     this.game.load.audio('firestrike', [ 'assets/audio/SoundEffects/firestrike.ogg' ]);
+    this.game.load.audio('deathmoans', [ 'assets/audio/SoundEffects/pacmanDeath.ogg' ]);
   }
 
   create() {
@@ -43,6 +43,7 @@ export default class Player {
 
     // Now create audio for player
     this.firestrike = this.game.add.audio('firestrike');
+    this.deathmoans - this.game.add.audio('deathmoans');
 
     // Now create bullets group
     this.bullets = this.game.add.group();
@@ -139,7 +140,7 @@ export default class Player {
         bullet.rotation = this.game.physics.arcade.moveToPointer(bullet, 500, this.game.input.activePointer);
       }
       // Delay next bullet fire opportunity
-      this.nextFire = this.game.time.now + this.fireRate;
+      this.nextFire = this.game.time.now + store.fireRate;
 
       // Play audio for Fire Strike
       this.firestrike.play('', 0, 0.2, false);

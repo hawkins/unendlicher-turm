@@ -9,6 +9,7 @@ export default {
   healthCost: 1,
   speedCost: 1,
   damageCost: 1,
+  fireRate: 600,
   backgroudMusic: '',
   nextState: ''
 };

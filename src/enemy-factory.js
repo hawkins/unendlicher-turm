@@ -2,6 +2,7 @@ import Knight from './enemies/knight';
 import Wizard from './enemies/wizard';
 import Archer from './enemies/archer';
 import Guardian from './enemies/guardian';
+import player from './store';
 
 export default class EnemyFactory {
   constructor(game, wave) {
@@ -163,8 +164,8 @@ export default class EnemyFactory {
     // Guardian shows up at wave 20
     if (wave >= 20) {
       spawn.guardian.number = 1;
-      spawn.guardian.health = 10 * spawn.knight.health;
-      spawn.guardian.damage = 100;
+      spawn.guardian.health = player.maxHealth * 2;
+      spawn.guardian.damage = player.damage * 3;
     }
 
     spawn.knight.number = Math.round(spawn.knight.number);
