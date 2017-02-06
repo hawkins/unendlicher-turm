@@ -22,7 +22,7 @@ var powerups;
 var playerPosition;
 
 // Click Rates
-var clickRate = 2000;
+var clickRate = 1000;
 var nextClick;
 
 // MAP

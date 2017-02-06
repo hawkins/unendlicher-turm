@@ -23,7 +23,7 @@ export default class powerUps {
   healthZone() {
     if (store.coins >= store.healthCost) {
       store.coins = store.coins - store.healthCost;
-      store.maxHealth += 5;
+      store.maxHealth += 10;
       store.healthCost++;
       store.health = store.maxHealth;
     } else {
@@ -35,19 +35,28 @@ export default class powerUps {
     if (store.coins >= store.damageCost) {
       store.coins = store.coins - store.damageCost;
       store.damageCost++;
-      store.damage += 2;
+      store.damage += 3;
+      if (store.fireRate > 75) {
+        store.fireRate -= 25;
+      } else {
+        console.log("You're writing checks your body can't cash!");
+      }
     } else {
       console.log("You're out of money!");
     }
   }
 
   speedZone() {
-    if (store.coins >= store.speedCost) {
-      store.coins = store.coins - store.speedCost;
-      store.speedCost++;
-      store.speed += 10;
+    if (store.speed <= 400) {
+      if (store.coins >= store.speedCost) {
+        store.coins = store.coins - store.speedCost;
+        store.speedCost++;
+        store.speed += 10;
+      } else {
+        console.log("You're out of money!");
+      }
     } else {
-      console.log("You're out of money!");
+      console.log("You're not the Flash so chill!");
     }
   }
 }

@@ -46,7 +46,7 @@ export default class Guardian {
     if (this.health <= 0) {
       this.alive = false;
       this.baddie.kill();
-
+      store.coins += 5;
       return true;
     }
 
