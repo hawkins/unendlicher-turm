@@ -16,7 +16,10 @@ export default class GUI {
 
   update() {
     // Update health bar
-    this.healthbar.setPercent(store.health / store.maxHealth * 100);
+    if (store.dirtyHealth) {
+      store.dirtyHealth = false;
+      this.healthbar.setPercent(store.health / store.maxHealth * 100);
+    }
   }
 
   render() {

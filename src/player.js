@@ -164,6 +164,8 @@ export default class Player {
     bullet.kill();
     this.ugh.play('', 0, 0.3, false);
 
+    store.dirtyHealth = true;
+
     // If health depleted, end the game
     if (store.health <= 0) {
       this.onDeath();
@@ -173,6 +175,8 @@ export default class Player {
   // When an enemy hits us
   onEnemyCollision(enemy) {
     store.health = store.health - enemy.damage / 50;
+
+    store.dirtyHealth = true;
 
     // If health depleted, end the game
     if (store.health <= 0) {
