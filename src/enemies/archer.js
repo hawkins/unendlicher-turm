@@ -52,7 +52,7 @@ export default class Archer {
     if (this.health <= 0) {
       this.alive = false;
       this.baddie.kill();
-      store.coins += 1.5;
+      store.coins += 0.75;
       return true;
     }
 
