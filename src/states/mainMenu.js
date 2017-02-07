@@ -227,7 +227,7 @@ of the Unendlicher Turm. The prophecy states an amulet was hidden amongst
 the souls of the guardians, and that there is no real way to release it.
 This frightens the magicians of the modern era, because the prophecy
 continues to say that the secret magic will instead be discovered in the one
-who can best the Final Guardian, Hurk. Thus the ancient magic has already
+who can best the legendary guardians. Thus the ancient magic has already
 been granted to a chosen one - but are you that chosen one?\n
 Click to close story`,
         fontFamily: 'Luckiest Guy',
