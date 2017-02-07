@@ -47,7 +47,7 @@ export default class Knight {
     if (this.health <= 0) {
       this.alive = false;
       this.baddie.kill();
-      store.coins += 0.25;
+      store.coins += 0.50;
       return true;
     }
 

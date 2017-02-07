@@ -27,8 +27,8 @@ export default {
     // Create layers
     floor = map.createLayer('Floor');
     walls = map.createLayer('Walls');
-    shelfItems = map.createLayer('ShelfItems');
     items = map.createLayer('Items');
+    shelfItems = map.createLayer('ShelfItems');
     doors = map.createLayer('Doors');
 
     spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -39,8 +39,8 @@ export default {
     // Collide with player
     map.setCollisionBetween(1, 10000, true, walls);
     map.setCollisionBetween(1, 10000, true, items);
-    map.setCollisionBetween(1, 10000, true, shelfItems);
     map.setCollisionBetween(1, 10000, true, doors);
+    map.setCollisionBetween(1, 10000, true, shelfItems);
 
     // Enter town when player collides with exit layer
     map.setTileLocationCallback(
@@ -74,8 +74,8 @@ export default {
     collidables.forEach(item => {
       // Collide with item
       game.physics.arcade.collide(item, walls);
-      game.physics.arcade.collide(item, items);
       game.physics.arcade.collide(item, shelfItems);
+      game.physics.arcade.collide(item, items);
       game.physics.arcade.collide(item, doors);
     });
   }

@@ -52,7 +52,7 @@ export default class Wizard {
     if (this.health <= 0) {
       this.alive = false;
       this.baddie.kill();
-      store.coins += 0.25;
+      store.coins += 1.0;
       return true;
     }
 
