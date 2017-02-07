@@ -1,10 +1,19 @@
 
+
 body {
+	background: linear-gradient(
+      rgba(9, 9, 19, 0.9),  
+      rgba(4, 4, 19, 0.9)
+    ),
+    url('/assets/images/cork-wallet.png');
+    font-family: 'Caudex', serif;
     margin: 0;
     width: 100%;
+    background-color: #151515;
 }
 
 body h1:first-of-type {
+	color: #b88c40;
     margin: auto;
     padding: 50px;
     text-align: center;
@@ -15,6 +24,50 @@ p {
     text-align: center;
 }
 
+#header {
+	height: 180px;
+	text-align: center;
+	padding-bottom: 25px;
+	padding-top: 10px;
+	border-bottom: 1px solid #b88c40;
+}
+
+footer{
+	height: 50px;
+	background-color: #151515;
+	border-top: 1px solid #b88c40;
+	color:#b88c40;
+	text-align: center;
+	font-size: 12px;
+	padding-top: 15px;
+}
+#root {
+	padding-top: 42px;
+	padding-bottom: 40px;
+	background-image: url("/assets/images/gameBanner2.png");
+	background-repeat: no-repeat;
+	background-position: 132px;
+	background-color: #151515;
+	border-bottom: 1px solid #b88c40;
+}
+
 #root canvas {
-    margin: auto;
+    margin-left: 247px;
+    margin-top: 298px;
+    padding-left: 5px;
+/*    padding: 5px;*/
+}
+
+#story {	
+	color: #b88c40;
+	text-align: center;
+	font-size: 14px;
+    line-height: 24px;
+	padding: 50px;
+	margin: auto;
+	width: 800px;
+}
+
+#story p {
+	color: white;
 }
