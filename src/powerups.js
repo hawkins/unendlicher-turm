@@ -38,9 +38,9 @@ export default class powerUps {
       store.purchaseSound = true;
       store.coins = store.coins - store.damageCost;
       store.damageCost++;
-      store.damage += 3;
+      store.damage++;
       if (store.fireRate > 75) {
-        store.fireRate -= 25;
+        store.fireRate -= 15;
       } else {
         store.purchaseSound = false;
         console.log("You're writing checks your body can't cash!");

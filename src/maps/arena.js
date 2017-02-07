@@ -47,8 +47,12 @@ export default {
       1,
       2,
       () => {
-        store.nextState = 'town';
-        game.state.start('town');
+        if (state.unlocked) {
+          store.wave++;
+          store.coins = store.coins + (Math.floor(Math.random() * (coinMax - coinMin)) + coinMin);
+          store.nextState = 'town';
+          game.state.start('town');
+        }
       },
       state,
       exitLayer

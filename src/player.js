@@ -183,6 +183,7 @@ export default class Player {
   onDeath() {
     /* Debug */
     this.game.sound.stopAll();
+    store.coins = 0;
     this.game.state.start('deathMenu');
   }
 }

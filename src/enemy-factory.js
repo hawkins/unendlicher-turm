@@ -141,31 +141,22 @@ export default class EnemyFactory {
     };
 
     spawn.knight.number = wave;
-    if (wave % 5 === 0) {
-      spawn.knight.number *= 1.5;
-    }
 
     // Wizards show up after 5 waves
-    if (wave > 5) {
-      spawn.wizard.number = wave - 5;
-    }
-    if (wave % 3 === 0) {
-      spawn.wizard.number *= 1.5;
+    if (wave >= 5) {
+      spawn.wizard.number = wave - 4;
     }
 
     // Archers show up after 10 waves
-    if (wave > 10) {
+    if (wave >= 10) {
       spawn.archer.number = wave - 8;
     }
-    if (wave % 4 === 0) {
-      spawn.archer.number *= 1.5;
-    }
 
-    // Guardian shows up at wave 20
-    if (wave >= 20) {
-      spawn.guardian.number = 1;
+    // Guardian shows up at wave 15
+    if (wave >= 15) {
+      spawn.guardian.number = wave - 14;
       spawn.guardian.health = player.maxHealth * 2;
-      spawn.guardian.damage = player.damage * 3;
+      spawn.guardian.damage = player.damage * 5;
     }
 
     spawn.knight.number = Math.round(spawn.knight.number);
@@ -173,13 +164,13 @@ export default class EnemyFactory {
     spawn.archer.number = Math.round(spawn.archer.number);
     spawn.number = spawn.knight.number + spawn.wizard.number + spawn.archer.number + spawn.guardian.number;
 
-    spawn.knight.health = wave / 4 + 1;
-    spawn.wizard.health = wave / 7 + 1;
-    spawn.archer.health = wave / 12 + 1;
+    spawn.knight.health = 3 * wave + 1;
+    spawn.wizard.health = 2 * wave + 1;
+    spawn.archer.health = wave + 1;
 
     spawn.knight.damage = wave / 5 + 1;
-    spawn.wizard.damage = wave / 3;
-    spawn.archer.damage = wave / 2;
+    spawn.wizard.damage = wave / 2;
+    spawn.archer.damage = wave / 3;
 
     return spawn;
   }

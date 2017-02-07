@@ -41,7 +41,7 @@ export default class Knight {
 
   // Hurts the enemy and returns true if the enemy was killed
   hurt() {
-    this.health -= 1;
+    this.health -= store.damage;
 
     // Kill the enemy if health depleted
     if (this.health <= 0) {
