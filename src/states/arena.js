@@ -20,6 +20,7 @@ var gui;
 
 // Audio
 var baddieDeath;
+var baddieHit;
 
 function preload() {
   // Create controllers now that game exists
@@ -34,6 +35,7 @@ function preload() {
   // Load Audio File
   this.game.load.audio('arenaBackground', [ 'assets/audio/SoundEffects/madGod.ogg' ]);
   this.game.load.audio('baddieDeath', [ 'assets/audio/SoundEffects/baddieDeath.ogg' ]);
+  this.game.load.audio('baddieHit', [ 'assets/audio/SoundEffects/baddieHit.ogg' ]);
 }
 
 function create() {
@@ -58,6 +60,7 @@ function create() {
 
   // Create sounds
   baddieDeath = this.game.add.audio('baddieDeath');
+  baddieHit = this.game.add.audio('baddieHit');
 
   if (store.backgroundMusic.name !== 'arenaBackground') {
     // Create Audio for town
@@ -122,6 +125,7 @@ function update() {
 // Explosion Animation / Destroy enemies
 function bulletHitEnemy(baddie, bullet) {
   bullet.kill();
+  baddieHit.play('', 0, 0.1, false);
   var destroyed = baddie.controller.hurt();
 
   if (destroyed) {
