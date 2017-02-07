@@ -27,6 +27,7 @@ export default class powerUps {
       store.maxHealth += 10;
       store.healthCost++;
       store.health = store.maxHealth;
+      store.dirtyHealth = true;
     } else {
       store.purchaseSound = false;
       console.log("You're out of money!");
