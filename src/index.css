@@ -25,8 +25,11 @@ p {
 }
 
 #header {
-	height: 180px;
+	background-image: url("/assets/images/gameBanner3.png");
+	background-repeat: no-repeat;
+	background-position: center;
 	text-align: center;
+	height: 300px;
 	padding-bottom: 25px;
 	padding-top: 10px;
 	border-bottom: 1px solid #b88c40;
@@ -41,19 +44,18 @@ footer{
 	font-size: 12px;
 	padding-top: 15px;
 }
+
 #root {
 	padding-top: 42px;
 	padding-bottom: 40px;
-	background-image: url("/assets/images/gameBanner2.png");
-	background-repeat: no-repeat;
-	background-position: 132px;
 	background-color: #151515;
 	border-bottom: 1px solid #b88c40;
 }
 
 #root canvas {
-    margin-left: 247px;
-    margin-top: 298px;
+	margin: auto;
+   /* margin-left: 247px;*/
+    /*margin-top: 298px;*/
     padding-left: 5px;
 /*    padding: 5px;*/
 }
