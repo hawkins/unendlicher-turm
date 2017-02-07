@@ -40,7 +40,7 @@ export default class Guardian {
 
   // Hurts the enemy and returns true if the enemy was killed
   hurt() {
-    this.health -= 1;
+    this.health -= store.damage;
 
     // Kill the enemy if health depleted
     if (this.health <= 0) {
@@ -83,7 +83,7 @@ export default class Guardian {
         this.baddie.animations.play('attack_down');
       }
 
-      // TODO: Kill the player when attack animation ends
+      // Attack the player
       this.player.controller.onEnemyCollision(this);
     }
 
