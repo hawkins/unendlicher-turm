@@ -20,6 +20,7 @@ export default class Player {
     // Audio assets
     this.game.load.audio('firestrike', [ 'assets/audio/SoundEffects/firestrike.ogg' ]);
     this.game.load.audio('deathmoans', [ 'assets/audio/SoundEffects/pacmanDeath.ogg' ]);
+    this.game.load.audio('ugh', [ 'assets/audio/SoundEffects/ugh.ogg' ]);
   }
 
   create() {
@@ -43,7 +44,8 @@ export default class Player {
 
     // Now create audio for player
     this.firestrike = this.game.add.audio('firestrike');
-    this.deathmoans - this.game.add.audio('deathmoans');
+    this.deathmoans = this.game.add.audio('deathmoans');
+    this.ugh = this.game.add.audio('ugh');
 
     // Now create bullets group
     this.bullets = this.game.add.group();
@@ -160,6 +162,7 @@ export default class Player {
     // Hurt the player
     store.health -= bullet.damage;
     bullet.kill();
+    this.ugh.play('', 0, 0.3, false);
 
     // If health depleted, end the game
     if (store.health <= 0) {

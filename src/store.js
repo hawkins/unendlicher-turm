@@ -11,5 +11,6 @@ export default {
   damageCost: 1,
   fireRate: 500,
   backgroudMusic: '',
+  purchaseSound: '',
   nextState: ''
 };
