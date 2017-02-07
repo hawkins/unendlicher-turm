@@ -30,11 +30,13 @@ var nextClick;
 var healthPortal;
 var strengthPortal;
 var speedPortal;
+var healthRestorePortal;
 
 // Create Variables for Portal Tile Position
 var healthStone;
 var strengthStone;
 var speedStone;
+var healthStatue;
 
 // Create Variable for Object Layer
 var height;
@@ -73,15 +75,11 @@ function create() {
   var map = this.game.add.tilemap('shop');
   map.addTilesetImage('DungeonCrawl_ProjectUtumnoTileset', 'tiles');
 
-  // TODO: Determine why only one Portals can exist
-  // Create object layer
-  // healthPortal = map.objects.Portals[0];
-  // strengthPortal = map.obects.Portals[1];
-  // speedPortal = map.objects.Portals[2];
   // Assign Portal Position (x, y , width, height)
   healthStone = new Phaser.Rectangle(301, 32, 68, 42);
   strengthStone = new Phaser.Rectangle(431, 32, 68, 42);
   speedStone = new Phaser.Rectangle(557, 32, 68, 42);
+  healthStatue = new Phaser.Rectangle(96, 32, 96, 64);
 
   // Create the map(s)
   shop.create(this.game);
@@ -163,6 +161,16 @@ function update() {
   } else if (enter.isDown && speedStone.contains(playerPosition.x, playerPosition.y)) {
     if (timer(this.game)) {
       powerups.speedZone();
+
+      if (store.purchaseSound) {
+        store.powerUp.play('', 0, 0.8, false);
+      } else {
+        store.noCoins.play('', 0, 1, false);
+      }
+    }
+  } else if (enter.isDown && healthStatue.contains(playerPosition.x, playerPosition.y)) {
+    if (timer(this.game)) {
+      powerups.healthRestoreZone();
 
       if (store.purchaseSound) {
         store.powerUp.play('', 0, 0.8, false);
