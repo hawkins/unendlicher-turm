@@ -1,7 +1,7 @@
 import store from './store';
 
 export default class powerUps {
-  constructor(index, game, player, maxHealth, health, damage, speed, coins, healthCost, speedCost, damageCost) {
+  constructor(index, game, player, maxHealth, health, damage, speed, coins, healthCost, speedCost, damageCost, healthRestoreCost) {
     this.game = game;
     this.player = player;
 
@@ -18,6 +18,7 @@ export default class powerUps {
     this.healthCost = healthCost;
     this.speedCost = speedCost;
     this.damageCost = damageCost;
+    this.healthRestoreCost = healthRestoreCost;
   }
 
   healthZone() {
@@ -66,6 +67,19 @@ export default class powerUps {
     } else {
       store.purchaseSound = false;
       console.log("You're not the Flash so chill!");
+    }
+  }
+
+  healthRestoreZone() {
+    if (store.coins >= store.healthRestoreCost && store.maxHealth !== store.health) {
+      store.purchaseSound = true;
+      store.healthRestoreCost = 2;
+      store.coins = store.coins - store.healthRestoreCost;
+      store.health = store.maxHealth;
+      store.dirtyHealth = true;
+    } else {
+      store.purchaseSound = false;
+      console.log("You're out of money!");
     }
   }
 }
