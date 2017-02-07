@@ -57,6 +57,8 @@ function preload() {
 
   // Load audio file
   this.game.load.audio('adventure', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
+  this.game.load.audio('powerUp', [ 'assets/audio/SoundEffects/powerUp.ogg' ]);
+  this.game.load.audio('noCoins', [ 'assets/audio/SoundEffects/noCoins.ogg' ]);
 
   playerController = new Player(this.game, 3, 8);
   playerController.preload();
@@ -101,6 +103,9 @@ function create() {
     store.backgroundMusic.play('', 1, 0.3, true);
   }
 
+  store.powerUp = this.game.add.audio('powerUp');
+  store.noCoins = this.game.add.audio('noCoins');
+
   //  This will force player to decelerate and limit its speed
   player.body.drag.set(550);
   player.body.maxVelocity.setTo(200, 200);
@@ -138,14 +143,32 @@ function update() {
   if (enter.isDown && healthStone.contains(playerPosition.x, playerPosition.y)) {
     if (timer(this.game)) {
       powerups.healthZone();
+
+      if (store.purchaseSound) {
+        store.powerUp.play('', 0, 0.8, false);
+      } else {
+        store.noCoins.play('', 0, 1, false);
+      }
     }
   } else if (enter.isDown && strengthStone.contains(playerPosition.x, playerPosition.y)) {
     if (timer(this.game)) {
       powerups.damageZone();
+
+      if (store.purchaseSound) {
+        store.powerUp.play('', 0, 0.8, false);
+      } else {
+        store.noCoins.play('', 0, 1, false);
+      }
     }
   } else if (enter.isDown && speedStone.contains(playerPosition.x, playerPosition.y)) {
     if (timer(this.game)) {
       powerups.speedZone();
+
+      if (store.purchaseSound) {
+        store.powerUp.play('', 0, 0.8, false);
+      } else {
+        store.noCoins.play('', 0, 1, false);
+      }
     }
   }
 }
