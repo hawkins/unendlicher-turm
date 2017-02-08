@@ -127,6 +127,10 @@ export default class Player {
     if (this.game.time.now > this.nextFire) {
       // Then create the bullet
       var bullet = this.bullets.getFirstExists(false);
+
+      // We can only have so many bullets out at once; skip if we're out
+      if (!bullet) return;
+
       var spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
       if (spacebar.isDown) {

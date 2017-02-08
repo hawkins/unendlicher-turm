@@ -126,9 +126,11 @@ function bulletHitEnemy(baddie, bullet) {
 
   if (destroyed) {
     var explosionAnimation = enemyController.explosions.getFirstExists(false);
-    explosionAnimation.reset(baddie.x, baddie.y);
-    explosionAnimation.play('kaboom', 30, false, true);
-    baddieDeath.play('', 0, 0.2, false);
+    if (explosionAnimation) {
+      explosionAnimation.reset(baddie.x, baddie.y);
+      explosionAnimation.play('kaboom', 30, false, true);
+      baddieDeath.play('', 0, 0.2, false);
+    }
   }
 }
 

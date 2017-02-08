@@ -136,7 +136,9 @@ Press the F key to toggle Fullscreen.\n
 Arena Actions
 Use the space bar or left-click the mouse to fire.\nUsing the mouse will increase your accuracy.\n
 Shop Actions
-Purchase health, damage, or speed by standing on it's respective rune and pressing the Enter key.`,
+Purchase health, damage, or speed by standing on it's respective rune and pressing the Enter key.
+The fountain on the left will restore health, while the runes are used to purchase
+health (green), damage (red) and speed (blue).`,
         fontFamily: 'Luckiest Guy',
         fontSize: 18,
         color: '0xFFFFFF',

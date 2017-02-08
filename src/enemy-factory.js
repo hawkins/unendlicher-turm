@@ -11,7 +11,7 @@ export default class EnemyFactory {
 
     this.player = undefined;
     this.waveComplete = false;
-    this.maxExplosions = 10;
+    this.maxExplosions = 50;
     this.enemies = [];
     this.enemyGroup = undefined;
     this.enemySpells = undefined;
