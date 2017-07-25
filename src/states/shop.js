@@ -58,9 +58,9 @@ function preload() {
   this.game.load.image('tiles', 'assets/images/tiles.png');
 
   // Load audio file
-  this.game.load.audio('adventure', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
-  this.game.load.audio('powerUp', [ 'assets/audio/SoundEffects/powerUp.ogg' ]);
-  this.game.load.audio('noCoins', [ 'assets/audio/SoundEffects/noCoins.ogg' ]);
+  this.game.load.audio('adventure', ['assets/audio/SoundEffects/adventure.ogg']);
+  this.game.load.audio('powerUp', ['assets/audio/SoundEffects/powerUp.ogg']);
+  this.game.load.audio('noCoins', ['assets/audio/SoundEffects/noCoins.ogg']);
 
   playerController = new Player(this.game, 3, 8);
   playerController.preload();
@@ -127,7 +127,7 @@ function create() {
 
 function update() {
   // Arena map
-  shop.update(this.game, [ player ]);
+  shop.update(this.game, [player]);
 
   // Update the gui
   gui.update();

@@ -18,9 +18,9 @@ export default class Player {
     this.game.load.image('TJ', 'assets/images/TJ_topdown.png');
 
     // Audio assets
-    this.game.load.audio('firestrike', [ 'assets/audio/SoundEffects/firestrike.ogg' ]);
-    this.game.load.audio('deathmoans', [ 'assets/audio/SoundEffects/pacmanDeath.ogg' ]);
-    this.game.load.audio('ugh', [ 'assets/audio/SoundEffects/ugh.ogg' ]);
+    this.game.load.audio('firestrike', ['assets/audio/SoundEffects/firestrike.ogg']);
+    this.game.load.audio('deathmoans', ['assets/audio/SoundEffects/pacmanDeath.ogg']);
+    this.game.load.audio('ugh', ['assets/audio/SoundEffects/ugh.ogg']);
   }
 
   create() {
@@ -72,7 +72,7 @@ export default class Player {
     // Horizontal motion
     if (cursors.left.isDown || keyA.isDown) {
       if (cursors.up.isDown || keyW.isDown || cursors.down.isDOwn || keyS.isDown) {
-        this.player.body.velocity.x = (-store.speed) / Math.sqrt(2);
+        this.player.body.velocity.x = -store.speed / Math.sqrt(2);
       } else {
         this.player.body.velocity.x = -store.speed;
       }
@@ -90,10 +90,10 @@ export default class Player {
     if (cursors.up.isDown || keyW.isDown) {
       // Are we also moving sideways?
       if (cursors.left.isDown || keyA.isDown) {
-        this.player.body.velocity.y = (-store.speed) / Math.sqrt(2);
+        this.player.body.velocity.y = -store.speed / Math.sqrt(2);
         this.player.angle = 225;
       } else if (cursors.right.isDown || keyD.isDown) {
-        this.player.body.velocity.y = (-store.speed) / Math.sqrt(2);
+        this.player.body.velocity.y = -store.speed / Math.sqrt(2);
         this.player.angle = 315;
       } else {
         this.player.body.velocity.y = -store.speed;

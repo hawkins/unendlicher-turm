@@ -73,7 +73,7 @@ export default class EnemyFactory {
     this.explosions = this.game.add.group();
     // Prepare explosion pool
     for (var i = 0; i < this.maxExplosions; i++) {
-      var explosionAnimation = this.explosions.create(0, 0, 'kaboom', [ 0 ], false);
+      var explosionAnimation = this.explosions.create(0, 0, 'kaboom', [0], false);
       explosionAnimation.anchor.setTo(0.5, 0.5);
       explosionAnimation.animations.add('kaboom');
     }

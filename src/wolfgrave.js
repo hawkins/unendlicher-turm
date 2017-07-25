@@ -42,7 +42,7 @@ export default class Wolfgrave {
   createQuote() {
     // Create quote
     this.quote = this.game.add.sprite(this.spawn.x, this.spawn.y, 'wolfgrave-quote1');
-    this.quote.anchor.set(0.30, 1);
+    this.quote.anchor.set(0.3, 1);
     this.quote.scale.set(0.5, 0.5);
   }
 

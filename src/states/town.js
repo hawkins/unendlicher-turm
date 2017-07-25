@@ -19,7 +19,7 @@ var wolfgrave;
 
 function preload() {
   // Load audio file
-  this.game.load.audio('mainBackground', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
+  this.game.load.audio('mainBackground', ['assets/audio/SoundEffects/adventure.ogg']);
 
   playerController = new Player(this.game, 4, 15);
   playerController.preload();
@@ -72,7 +72,7 @@ function create() {
 
 function update() {
   // Map
-  town.update(this.game, [ player ]);
+  town.update(this.game, [player]);
 
   // NPC
   wolfgrave.update(player);

@@ -36,7 +36,7 @@ function preload() {
   this.game.load.image('TJ', 'assets/images/TJ_topdown.png');
 
   // Load audio file
-  this.game.load.audio('pacmanDeath', [ 'assets/audio/SoundEffects/pacmanDeath.ogg' ]);
+  this.game.load.audio('pacmanDeath', ['assets/audio/SoundEffects/pacmanDeath.ogg']);
 
   deathMenu.preload(this.game);
 }

@@ -46,7 +46,7 @@ function preload() {
   this.game.load.image('TJ', 'assets/images/TJ_topdown.png');
 
   // Load audio file
-  this.game.load.audio('mainBackground', [ 'assets/audio/SoundEffects/adventure.ogg' ]);
+  this.game.load.audio('mainBackground', ['assets/audio/SoundEffects/adventure.ogg']);
 
   mainMenu.preload(this.game);
 }

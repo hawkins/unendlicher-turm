@@ -32,8 +32,8 @@ function preload() {
   arena.preload(this.game);
 
   // Load Audio File
-  this.game.load.audio('arenaBackground', [ 'assets/audio/SoundEffects/madGod.ogg' ]);
-  this.game.load.audio('baddieDeath', [ 'assets/audio/SoundEffects/baddieDeath.ogg' ]);
+  this.game.load.audio('arenaBackground', ['assets/audio/SoundEffects/madGod.ogg']);
+  this.game.load.audio('baddieDeath', ['assets/audio/SoundEffects/baddieDeath.ogg']);
 }
 
 function create() {
@@ -93,7 +93,7 @@ function create() {
 
 function update() {
   // Arena map
-  arena.update(this.game, [ player, ...enemyController.enemyGroup.children ]);
+  arena.update(this.game, [player, ...enemyController.enemyGroup.children]);
 
   // Collide projectiles and player
   this.game.physics.arcade.overlap(enemyController.enemySpells, player, playerController.onBulletCollision, null, playerController);

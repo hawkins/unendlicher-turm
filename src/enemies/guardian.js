@@ -28,14 +28,14 @@ export default class Guardian {
     this.baddie.body.bounce.setTo(1, 1);
 
     // Create animations
-    this.baddie.animations.add('left', [ 0, 1, 2 ], 2, true);
-    this.baddie.animations.add('right', [ 5, 6, 7 ], 2, true);
-    this.baddie.animations.add('down', [ 10, 11, 12 ], 2, true);
-    this.baddie.animations.add('up', [ 15, 16, 17 ], 2, true);
-    this.baddie.animations.add('attack_left', [ 3, 4 ], 2, true);
-    this.baddie.animations.add('attack_right', [ 8, 9 ], 2, true);
-    this.baddie.animations.add('attack_down', [ 13, 14 ], 2, true);
-    this.baddie.animations.add('attack_up', [ 18, 19 ], 2, true);
+    this.baddie.animations.add('left', [0, 1, 2], 2, true);
+    this.baddie.animations.add('right', [5, 6, 7], 2, true);
+    this.baddie.animations.add('down', [10, 11, 12], 2, true);
+    this.baddie.animations.add('up', [15, 16, 17], 2, true);
+    this.baddie.animations.add('attack_left', [3, 4], 2, true);
+    this.baddie.animations.add('attack_right', [8, 9], 2, true);
+    this.baddie.animations.add('attack_down', [13, 14], 2, true);
+    this.baddie.animations.add('attack_up', [18, 19], 2, true);
   }
 
   // Hurts the enemy and returns true if the enemy was killed
